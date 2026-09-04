@@ -1,0 +1,324 @@
+@use '../../styles/variables' as *;
+
+.admin-page {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  color: $text-light;
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .admin-nav {
+      display: flex;
+      background-color: $card-bg;
+      border-radius: $radius;
+      border: 1px solid $border-color;
+      overflow: hidden;
+
+      a {
+        padding: 0.75rem 1.5rem;
+        color: $text-muted;
+        text-decoration: none;
+        font-weight: 600;
+        transition: $transition;
+
+        &.active {
+          background-color: $primary;
+          color: white;
+        }
+
+        &:hover:not(.active) {
+          background-color: $surface;
+          color: $text-light;
+        }
+      }
+    }
+  }
+
+  .admin-card {
+    background-color: $card-bg;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    padding: 1.5rem;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      .btn-add-product {
+        background-color: $success;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: $radius;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+          filter: brightness(1.1);
+        }
+      }
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      min-width: 800px;
+
+      th {
+        padding: 1rem;
+        border-bottom: 2px solid $border-color;
+        color: $text-muted;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid $border-color;
+        vertical-align: middle;
+
+        &.mono {
+          font-family: monospace;
+          color: $text-muted;
+        }
+
+        &.price {
+          font-weight: 700;
+          color: $success;
+        }
+
+        &.bold {
+          font-weight: 600;
+        }
+      }
+
+      // THE THUMBNAIL ROW STYLES
+      .order-thumbnails {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+
+        .thumb-wrapper {
+          position: relative;
+          width: 45px;
+          height: 45px;
+          background-color: #fff;
+          border-radius: $radius;
+          border: 1px solid $border-color;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2px;
+
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+
+          .qty-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: $primary;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      .product-thumb {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        background-color: #fff;
+        border-radius: $radius;
+        padding: 2px;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+
+        &.success {
+          background-color: rgba($success, 0.15);
+          color: $success;
+        }
+
+        &.pending {
+          background-color: rgba(#f59e0b, 0.15);
+          color: #f59e0b;
+        }
+      }
+
+      .btn-action {
+        background-color: rgba($primary, 0.1);
+        color: $primary;
+        border: 1px solid $primary;
+        padding: 0.5rem 1rem;
+        border-radius: $radius;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+          background-color: $primary;
+          color: white;
+        }
+      }
+
+      .btn-delete {
+        background: none;
+        border: none;
+        color: $text-muted;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: $transition;
+
+        &:hover {
+          color: $error;
+        }
+      }
+    }
+  }
+}
+
+// Add this inside the main file, at the bottom!
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
+    .modal-content {
+      background-color: $card-bg;
+      width: 100%;
+      max-width: 600px;
+      border-radius: $radius-lg;
+      border: 1px solid $border-color;
+      padding: 2rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      max-height: 90vh;
+      overflow-y: auto;
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        
+        h2 { font-size: 1.5rem; color: $text-light; }
+        
+        .btn-close {
+          background: none; border: none; color: $text-muted; cursor: pointer; transition: $transition;
+          &:hover { color: $error; }
+        }
+      }
+
+      .admin-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+
+        .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.25rem;
+        }
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          label { font-size: 0.9rem; font-weight: 600; color: $text-muted; }
+          
+          input, textarea {
+            background-color: $surface; border: 1px solid $border-color; padding: 0.8rem;
+            border-radius: $radius; color: $text-light; font-size: 1rem; outline: none;
+            &:focus { border-color: $primary; }
+          }
+        }
+
+        .upload-group {
+          margin-top: 0.5rem;
+          
+          .image-upload-wrapper {
+            display: flex; align-items: center; gap: 1.5rem;
+            
+            .upload-btn {
+              background-color: $surface; border: 1px dashed $primary; color: $primary;
+              padding: 0.8rem 1.5rem; border-radius: $radius; display: flex; align-items: center;
+              gap: 0.5rem; cursor: pointer; transition: $transition; font-weight: 600;
+              &:hover { background-color: $primary; color: white; }
+            }
+            
+            .img-preview, .img-placeholder {
+              width: 80px; height: 80px; border-radius: $radius; object-fit: cover;
+            }
+            .img-placeholder {
+              background-color: $surface; display: flex; align-items: center; justify-content: center; color: $text-muted;
+            }
+          }
+        }
+
+        .btn-submit-modal {
+          margin-top: 1rem; background-color: $primary; color: white; border: none; padding: 1rem;
+          border-radius: $radius; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: $transition;
+          &:hover:not(:disabled) { background-color: $primary-hover; }
+          &:disabled { opacity: 0.6; cursor: not-allowed; }
+        }
+      }
+    }
+  }

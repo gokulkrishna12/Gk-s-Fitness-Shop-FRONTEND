@@ -1,0 +1,169 @@
+@use 'variables' as *;
+@use 'sass:color';
+
+// ══════════════════════════════════════════════
+// Google Fonts
+// ══════════════════════════════════════════════
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+// ══════════════════════════════════════════════
+// Reset & Base
+// ══════════════════════════════════════════════
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-primary;
+  background-color: $color-bg-page;
+  color: $color-text;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: $font-primary;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+// ══════════════════════════════════════════════
+// Layout
+// ══════════════════════════════════════════════
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+}
+
+.container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+// ══════════════════════════════════════════════
+// Typography
+// ══════════════════════════════════════════════
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-heading;
+  line-height: 1.2;
+}
+
+// ══════════════════════════════════════════════
+// Buttons
+// ══════════════════════════════════════════════
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  background-color: $color-accent;
+  color: $color-surface;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-md;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  transition: $transition;
+  box-shadow: 0 4px 14px rgba(255, 51, 51, 0.3);
+
+  &:hover {
+    background-color: color.adjust($color-accent, $lightness: -8%);
+    transform: translateY(-2px);
+    box-shadow: $shadow-glow;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  background-color: $color-secondary;
+  color: $color-surface;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-md;
+  font-weight: 600;
+  transition: $transition;
+
+  &:hover {
+    background-color: $color-primary;
+    transform: translateY(-2px);
+  }
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  background: transparent;
+  color: $color-text;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-md;
+  border: 2px solid $color-border;
+  font-weight: 600;
+  transition: $transition;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+    transform: translateY(-2px);
+  }
+}
+
+// ══════════════════════════════════════════════
+// Scrollbar (Premium)
+// ══════════════════════════════════════════════
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg-page;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-secondary;
+  border-radius: 3px;
+
+  &:hover {
+    background: $color-primary;
+  }
+}

@@ -1,0 +1,140 @@
+@use '../../styles/variables' as *;
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #1f1f1f, $dark-bg);
+  padding: 1.5rem;
+
+  .auth-card {
+    background-color: $card-bg;
+    border: 1px solid $border-color;
+    border-radius: $radius-lg;
+    width: 100%;
+    max-width: 440px;
+    padding: 2.5rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 2rem;
+
+      h2 {
+        color: $text-light;
+        font-size: 1.85rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+
+        span {
+          color: $primary;
+        }
+      }
+
+      p {
+        color: $text-muted;
+        font-size: 0.95rem;
+      }
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+
+        label {
+          color: $text-light;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+
+          svg {
+            position: absolute;
+            left: 14px;
+            color: $text-muted;
+            width: 18px;
+            height: 18px;
+          }
+
+          input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            background-color: $surface;
+            border: 1px solid $border-color;
+            border-radius: $radius;
+            color: $text-light;
+            font-size: 0.95rem;
+            outline: none;
+            transition: $transition;
+
+            &:focus {
+              border-color: $primary;
+              box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
+            }
+
+            &::placeholder {
+              color: rgba($text-muted, 0.6);
+            }
+          }
+        }
+      }
+
+      .btn-submit {
+        background-color: $primary;
+        color: $text-light;
+        border: none;
+        padding: 14px;
+        border-radius: $radius;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: $transition;
+        margin-top: 0.5rem;
+
+        &:hover:not(:disabled) {
+          background-color: $primary-hover;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.75rem;
+      color: $text-muted;
+      font-size: 0.9rem;
+
+      a {
+        color: $primary;
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 0.35rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

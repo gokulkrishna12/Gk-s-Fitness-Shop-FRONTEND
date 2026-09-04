@@ -1,0 +1,223 @@
+@use '../../styles/variables' as *;
+
+.checkout-page {
+    min-height: calc(100vh - 72px);
+    padding: 3rem 0;
+    /* FIX: Removed horizontal padding to let background stretch */
+    /* OBSIDIAN GLASS BACKGROUND */
+    background-color: #16161a;
+    color: #ffffff;
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #ffffff;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+    }
+}
+
+.checkout-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media (min-width: 992px) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+/* Glassy Card Style for Sections */
+.shipping-section,
+.summary-section {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.shipping-section {
+    flex: 2;
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        svg {
+            color: #e63946;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.shipping-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+
+            .form-group {
+                flex: 1;
+            }
+        }
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* THE FIX: Premium Glassy Input Fields */
+        input {
+            width: 100%;
+            padding: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+
+            &:focus {
+                outline: none;
+                border-color: #e63946;
+                background-color: rgba(255, 255, 255, 0.08);
+                box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.15);
+            }
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.3);
+            }
+        }
+    }
+}
+
+.summary-section {
+    flex: 1;
+
+    @media (min-width: 992px) {
+        position: sticky;
+        top: 100px;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        svg {
+            color: #e63946;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+    }
+
+    .summary-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+        font-weight: 600;
+
+        span:first-child {
+            flex: 1;
+        }
+    }
+
+    .summary-totals {
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 1.5rem;
+        margin-bottom: 2rem;
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &.grand-total {
+                font-size: 1.4rem;
+                font-weight: 900;
+                color: #ffffff;
+
+                span:last-child {
+                    color: #e63946;
+                }
+            }
+        }
+    }
+
+    .btn-pay {
+        width: 100%;
+        background-color: #e63946;
+        color: #fff;
+        padding: 1.2rem;
+        border-radius: 8px;
+        font-weight: 900;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.75rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: #c92a37;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        &:disabled {
+            background-color: rgba(230, 57, 70, 0.5);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    }
+}

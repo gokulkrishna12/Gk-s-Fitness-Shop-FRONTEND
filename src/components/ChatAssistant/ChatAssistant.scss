@@ -1,0 +1,208 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.chat-assistant {
+  position: fixed;
+  bottom: $spacing-lg;
+  right: $spacing-lg;
+  z-index: 200;
+
+  &-window {
+    background-color: $color-surface;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+    border: 1px solid $color-border;
+    width: 340px;
+    height: 460px;
+    margin-bottom: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+
+    @media (max-width: 480px) {
+      width: calc(100vw - 32px);
+      right: $spacing-md;
+      bottom: 80px;
+    }
+  }
+
+  &-header {
+    background: linear-gradient(135deg, #e63946, #ff4d4d);
+    color: #ffffff;
+    padding: $spacing-md;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      font-weight: 700;
+      font-family: $font-heading;
+    }
+
+    button {
+      background: none;
+      color: #ffffff;
+      opacity: 0.8;
+      transition: $transition-fast;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &-messages {
+    flex: 1;
+    padding: $spacing-md;
+    background-color: $color-surface-alt;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &-message {
+    max-width: 80%;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-md;
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    &.user {
+      background-color: $color-secondary;
+      color: $color-surface;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    &.ai {
+      background-color: $color-surface;
+      color: $color-text;
+      border: 1px solid $color-border;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+  }
+
+  &-form {
+    padding: $spacing-sm;
+    background-color: $color-surface;
+    border-top: 1px solid $color-border;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    input {
+      flex: 1;
+      background-color: $color-surface-alt;
+      border: 1px solid $color-border;
+      border-radius: $radius-pill;
+      padding: $spacing-sm $spacing-md;
+      font-size: 0.9rem;
+      outline: none;
+      transition: $transition-fast;
+      font-family: $font-primary;
+      color: $color-text;
+
+      &:focus {
+        border-color: #e63946;
+        box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+      }
+    }
+
+    button {
+      background: linear-gradient(135deg, #e63946, #ff4d4d);
+      color: #ffffff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: $transition-fast;
+      flex-shrink: 0;
+      border: none;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled):hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+      }
+    }
+  }
+
+  /* 🔥 COMPACT RED MAGICAL AI BUTTON */
+  &-toggle {
+    background: linear-gradient(135deg, #e63946, #ff4d4d);
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    float: right;
+    font-family: $font-heading;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+
+    animation: magicPulseRed 2.5s infinite alternate ease-in-out;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05) translateY(-3px);
+      animation: magicPulseRedHover 1s infinite alternate ease-in-out;
+    }
+
+    span {
+      white-space: nowrap;
+    }
+  }
+}
+
+/* 🔥 The Breathing Glow Animation - RED THEME */
+@keyframes magicPulseRed {
+  0% {
+    box-shadow: 0 0 10px rgba(230, 57, 70, 0.4), 0 0 15px rgba(255, 77, 77, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 0 20px rgba(230, 57, 70, 0.8), 0 0 35px rgba(255, 77, 77, 0.5);
+  }
+}
+
+@keyframes magicPulseRedHover {
+  0% {
+    box-shadow: 0 0 15px rgba(230, 57, 70, 0.6), 0 0 25px rgba(255, 77, 77, 0.4);
+  }
+
+  100% {
+    box-shadow: 0 0 30px rgba(230, 57, 70, 1), 0 0 50px rgba(255, 77, 77, 0.8);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

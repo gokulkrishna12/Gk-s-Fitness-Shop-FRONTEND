@@ -1,0 +1,193 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.footer {
+  background-color: #140e0a; // Deep earthy dark matching your navbar
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4rem 0 0;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  &-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      // Gives the brand column a bit more width
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 4rem;
+    }
+  }
+
+  &-col {
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      font-family: inherit;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      color: #e63946; // Aggressive red
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .footer-brand-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+
+      .brand-icon {
+        color: #e63946;
+        transform: rotate(-15deg); // Matching your navbar logo tilt
+      }
+
+      span {
+        font-family: inherit;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+
+        strong {
+          color: #e63946;
+          font-weight: 900;
+        }
+      }
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        svg {
+          color: #e63946;
+          transition: transform 0.2s ease;
+        }
+
+        &:hover {
+          color: #ffffff;
+          transform: translateX(6px); // Slide effect on hover
+
+          svg {
+            transform: translateX(3px);
+          }
+        }
+      }
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+
+      .contact-icon {
+        color: #e63946;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  // Bottom Section with Developer Credit
+  &-bottom {
+    background-color: #0c0806; // Extra dark contrast for the bottom bar
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+
+    &-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+
+      @media (min-width: 768px) {
+        flex-direction: row;
+        text-align: left;
+      }
+
+      .developer-tag {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin: 0;
+
+        .heart-icon {
+          color: #e63946;
+          animation: heartbeat 1.5s infinite; // Subtle heartbeat animation
+        }
+
+        strong {
+          color: #ffffff;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+  }
+}
+
+// Heartbeat Animation Keyframes
+@keyframes heartbeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.25);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.25);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+}

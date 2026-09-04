@@ -1,0 +1,289 @@
+@use '../../styles/variables' as *;
+
+.product-details-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: $text-light;
+
+  .loader {
+    text-align: center;
+    margin-top: 5rem;
+    font-size: 1.5rem;
+    color: $primary;
+  }
+
+  // --- TOP SECTION ---
+  .product-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .image-slider-container {
+      background-color: $card-bg;
+      border-radius: $radius-lg;
+      overflow: hidden;
+      border: 1px solid $border-color;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .product-swiper {
+        width: 100%;
+        height: 100%;
+        
+        .swiper-slide {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #fff; // Keeps product images looking crisp with white backgrounds
+          
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        // Custom Swiper Colors
+        .swiper-button-next, .swiper-button-prev {
+          color: $primary;
+        }
+        .swiper-pagination-bullet-active {
+          background: $primary;
+        }
+      }
+
+      .no-image-placeholder {
+        color: $text-muted;
+        text-align: center;
+      }
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .category-badge {
+        background-color: rgba($primary, 0.15);
+        color: $primary;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        align-self: flex-start;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $success;
+        margin-bottom: 1.5rem;
+      }
+
+      .description {
+        color: $text-muted;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+
+      .btn-add-cart {
+        background-color: $primary;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: $radius;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        transition: $transition;
+
+        &:hover {
+          background-color: $primary-hover;
+        }
+      }
+    }
+  }
+
+  // --- BOTTOM SECTION (REVIEWS) ---
+  .reviews-section {
+    border-top: 1px solid $border-color;
+    padding-top: 3rem;
+
+    h2 {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .add-review-card {
+      background-color: $card-bg;
+      padding: 2rem;
+      border-radius: $radius-lg;
+      margin-bottom: 3rem;
+      border: 1px solid $border-color;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 1rem;
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          label {
+            font-weight: 600;
+          }
+
+          select, textarea {
+            background-color: $surface;
+            border: 1px solid $border-color;
+            color: $text-light;
+            padding: 1rem;
+            border-radius: $radius;
+            outline: none;
+            
+            &:focus {
+              border-color: $primary;
+            }
+          }
+        }
+
+        .upload-group {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          flex-wrap: wrap;
+
+          .upload-label {
+            cursor: pointer;
+
+            .upload-btn {
+              background-color: $surface;
+              border: 1px dashed $text-muted;
+              padding: 1rem 1.5rem;
+              border-radius: $radius;
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              color: $text-muted;
+              transition: $transition;
+
+              &:hover {
+                border-color: $primary;
+                color: $primary;
+              }
+            }
+          }
+
+          .image-preview {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: $radius;
+            overflow: hidden;
+            border: 2px solid $primary;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .preview-badge {
+              position: absolute;
+              bottom: 0;
+              width: 100%;
+              background: rgba(0,0,0,0.7);
+              font-size: 0.65rem;
+              text-align: center;
+              padding: 2px 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 4px;
+            }
+          }
+        }
+
+        .btn-submit-review {
+          background-color: $surface;
+          border: 1px solid $primary;
+          color: $primary;
+          padding: 1rem;
+          border-radius: $radius;
+          font-weight: bold;
+          cursor: pointer;
+          transition: $transition;
+          align-self: flex-start;
+
+          &:hover:not(:disabled) {
+            background-color: $primary;
+            color: white;
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+
+    .reviews-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+
+      .review-card {
+        background-color: $card-bg;
+        padding: 1.5rem;
+        border-radius: $radius;
+        border: 1px solid $border-color;
+
+        .review-header {
+          margin-bottom: 1rem;
+        }
+
+        .review-comment {
+          color: $text-muted;
+          line-height: 1.5;
+          margin-bottom: 1rem;
+        }
+
+        .review-image {
+          border-radius: $radius;
+          overflow: hidden;
+          max-height: 200px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+}

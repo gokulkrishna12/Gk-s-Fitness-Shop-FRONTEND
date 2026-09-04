@@ -1,0 +1,182 @@
+@use '../../styles/variables' as *;
+
+.ai-coach-wrapper {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+
+  .chat-fab {
+    background-color: $primary;
+    color: white;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba($primary, 0.4);
+    transition: $transition;
+
+    &:hover {
+      transform: scale(1.08) translateY(-3px);
+    }
+  }
+
+  .chat-panel {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 380px;
+    height: 550px;
+    background-color: $card-bg;
+    border: 1px solid $border-color;
+    border-radius: $radius-lg;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+
+    @media (max-width: 480px) {
+      width: 90vw;
+      height: 70vh;
+      right: -1rem;
+    }
+
+    .chat-header {
+      background-color: $surface;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid $border-color;
+
+      .header-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        h3 {
+          font-size: 1.1rem;
+          margin: 0;
+          color: $text-light;
+          font-weight: 700;
+        }
+        
+        .bot-icon {
+          color: $primary;
+        }
+      }
+
+      .btn-close {
+        background: none;
+        border: none;
+        color: $text-muted;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: $transition;
+
+        &:hover {
+          color: $error;
+        }
+      }
+    }
+
+    .chat-body {
+      flex-grow: 1;
+      padding: 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      background-color: $dark-bg;
+
+      .message {
+        max-width: 85%;
+        padding: 0.85rem 1rem;
+        border-radius: $radius;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        white-space: pre-wrap; // Preserves any line breaks Gemini sends back
+
+        &.assistant {
+          align-self: flex-start;
+          background-color: $surface;
+          color: $text-light;
+          border-bottom-left-radius: 0;
+          border: 1px solid $border-color;
+        }
+
+        &.user {
+          align-self: flex-end;
+          background-color: $primary;
+          color: white;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      .typing-indicator {
+        align-self: flex-start;
+        color: $primary;
+        font-size: 0.85rem;
+        font-style: italic;
+        font-weight: 600;
+        padding-left: 0.5rem;
+      }
+    }
+
+    .chat-footer {
+      padding: 1rem;
+      background-color: $surface;
+      border-top: 1px solid $border-color;
+
+      form {
+        display: flex;
+        gap: 0.5rem;
+
+        input {
+          flex-grow: 1;
+          padding: 0.85rem 1rem;
+          background-color: $dark-bg;
+          border: 1px solid $border-color;
+          color: $text-light;
+          border-radius: 25px;
+          outline: none;
+          font-size: 0.95rem;
+
+          &:focus {
+            border-color: $primary;
+          }
+        }
+
+        .btn-send {
+          background-color: $primary;
+          color: white;
+          border: none;
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: $transition;
+
+          &:hover:not(:disabled) {
+            background-color: $primary-hover;
+            transform: scale(1.05);
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}

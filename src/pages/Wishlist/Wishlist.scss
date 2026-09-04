@@ -1,0 +1,89 @@
+@use '../../styles/variables' as *;
+
+.wishlist-page {
+  min-height: calc(100vh - 72px);
+  padding: 3rem 0;
+  /* Removed horizontal padding so the background is truly flush */
+  /* FINE DARK OBSIDIAN BACKGROUND */
+  background-color: #16161a;
+  color: #ffffff;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+  }
+}
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* GLASSY EMPTY STATE */
+.wishlist-empty {
+  /* Frosted Glass Look */
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+
+  .empty-icon {
+    color: #e63946;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .btn-primary {
+    background-color: #e63946;
+    color: #fff;
+    padding: 1.2rem 2.5rem;
+    border-radius: 8px;
+    font-weight: 900;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #c92a37;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+    }
+  }
+}
