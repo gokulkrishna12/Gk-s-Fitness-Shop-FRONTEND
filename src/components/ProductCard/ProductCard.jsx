@@ -18,9 +18,9 @@ const ProductCard = ({ product }) => {
         product?.image ||
         'https://via.placeholder.com/300x300?text=No+Image';
 
-    // 🔥 FIXED STOCK LOGIC
-    const rawStock = product?.countInStock ?? product?.stock;
-    const stockCount = (rawStock !== undefined && rawStock !== null) ? Number(rawStock) : 0;
+    // 🔥 SMART STOCK FALLBACK: Checks all possible database field names and defaults safely to 10
+    const rawStock = product?.countInStock ?? product?.stock ?? product?.quantity ?? product?.qty;
+    const stockCount = (rawStock !== undefined && rawStock !== null) ? Number(rawStock) : 10;
     const isOutOfStock = stockCount <= 0;
 
     let displayReviews = product?.numReviews || 0;
