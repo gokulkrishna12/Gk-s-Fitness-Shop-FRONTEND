@@ -10,7 +10,9 @@ import {
   Circle,
   KeyRound,
   Clock,
-  Send
+  Send,
+  Eye,       // 🔥 Imported Eye
+  EyeOff     // 🔥 Imported EyeOff
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { otpApi } from '../../api/otpApi';
@@ -22,6 +24,9 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
+
+  // 🔥 State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   // Flow steps: 1 = Enter Details, 2 = Verify OTP, 3 = Set Password
   const [step, setStep] = useState(1);
@@ -82,10 +87,7 @@ const Register = () => {
     try {
       setIsLoading(true);
       toast.loading('Sending verification code...');
-
-      // Update this URL if your backend route is different (e.g., /api/auth/send-otp)
       await otpApi.sendOtp(email);
-
       toast.dismiss();
       toast.success(`6-digit OTP sent to ${email}`);
 
@@ -110,10 +112,7 @@ const Register = () => {
 
     try {
       setIsLoading(true);
-
-      // Update this URL if your backend route is different (e.g., /api/auth/verify-otp)
       await otpApi.verifyOtp(email, otp);
-
       setTimerActive(false);
       setStep(3);
       toast.success('Email verified successfully! Now set up your password.');
@@ -124,7 +123,7 @@ const Register = () => {
     }
   };
 
-  // STEP 3: Final Register (Real Backend Call)
+  // STEP 3: Final Register
   const handleRegister = async (e) => {
     e.preventDefault();
     if (!allValid) {
@@ -136,7 +135,6 @@ const Register = () => {
       setIsLoading(true);
       toast.loading('Forging your athlete profile...');
 
-      // 👉 Call your REAL backend register API to save the user to MongoDB
       const response = await axiosClient.post('/auth/register', {
         name,
         email,
@@ -145,13 +143,8 @@ const Register = () => {
       });
 
       toast.dismiss();
-
-      // Extract the real user and token from your backend response
       const { user, token } = response.data;
-
-      // Log them in using AuthContext with real data
       login(user, token);
-
       toast.success('Welcome Athlete! Your account is created.');
       navigate('/');
     } catch (error) {
@@ -271,17 +264,29 @@ const Register = () => {
               <label>Set Secure Password</label>
               <div className="input-wrapper">
                 <Lock className="input-icon" size={18} />
+
+                {/* 🔥 The input toggles between 'text' and 'password' */}
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoFocus
                   required
                 />
+
+                {/* 🔥 The clickable Eye button */}
+                <button
+                  type="button"
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 
+            {/* This is your existing checklist that handles the green text! */}
             <div className="password-checklist">
               <ValidationItem isValid={validations.length} text="8+ characters" />
               <ValidationItem isValid={validations.upper} text="Uppercase letter" />

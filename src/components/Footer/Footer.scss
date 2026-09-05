@@ -191,3 +191,55 @@
     transform: scale(1);
   }
 }
+
+// ── Footer Mobile Responsive ──
+@media (max-width: 768px) {
+  .footer {
+    padding: 2.5rem 0 0;
+
+    &-container {
+      padding: 0 1rem 2.5rem;
+      gap: 2rem;
+    }
+
+    &-col {
+      h3 {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2rem 0 0;
+
+    &-container {
+      padding: 0 0.75rem 2rem;
+      gap: 1.5rem;
+    }
+
+    &-col {
+      .footer-brand-info span {
+        font-size: 1.25rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      p,
+      ul li a {
+        font-size: 0.9rem;
+      }
+    }
+
+    &-bottom {
+      padding: 1rem;
+
+      &-content {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

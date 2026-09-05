@@ -124,4 +124,67 @@
       color: rgba(255, 255, 255, 0.5);
     }
   }
+
+  // ── Catalog Mobile Responsive ──
+  @media (max-width: 768px) {
+    padding: 2rem 0;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .category-filters {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+
+      // Hide scrollbar but keep it functional
+      &::-webkit-scrollbar {
+        height: 0;
+      }
+
+      .filter-btn {
+        flex-shrink: 0;
+        min-height: 44px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 0;
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .catalog-header {
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .category-filters {
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+
+      .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    .products-grid {
+      gap: 1.25rem;
+    }
+
+    .no-products {
+      padding: 3rem 1rem;
+
+      h3 {
+        font-size: 1.2rem;
+      }
+    }
+  }
 }

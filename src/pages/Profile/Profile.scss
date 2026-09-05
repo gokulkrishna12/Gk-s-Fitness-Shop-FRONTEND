@@ -97,7 +97,8 @@
         /* Premium Glassy Inputs */
         input {
             width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
+            /* 🔥 Fixed Right Padding so text doesn't hide behind eyeball */
+            padding: 1rem 2.8rem 1rem 3rem;
             background-color: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
@@ -122,6 +123,36 @@
             color: rgba(255, 255, 255, 0.4);
             cursor: not-allowed;
             border-color: transparent;
+        }
+
+        /* 🔥 Styles for the new Eyeball toggle buttons */
+        .password-toggle-btn {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: color 0.2s ease;
+
+            svg {
+                position: relative;
+                left: 0;
+                pointer-events: auto;
+            }
+
+            &:hover {
+                color: #ffffff;
+            }
+
+            &:focus {
+                outline: none;
+                color: #e63946;
+            }
         }
     }
 }
@@ -155,5 +186,53 @@
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
+    }
+}
+
+// ── Profile Mobile Responsive ──
+@media (max-width: 768px) {
+    .profile-page {
+        padding: 2.5rem 1rem;
+    }
+
+    .profile-header h1 {
+        font-size: 2rem;
+    }
+
+    .profile-card {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-page {
+        padding: 2rem 0.75rem;
+    }
+
+    .profile-header {
+        h1 {
+            font-size: 1.6rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .profile-card {
+        padding: 1.5rem;
+
+        h2 {
+            font-size: 1.15rem;
+
+            &.security-title {
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+            }
+        }
+    }
+
+    .input-group .input-wrapper input {
+        min-height: 44px;
     }
 }

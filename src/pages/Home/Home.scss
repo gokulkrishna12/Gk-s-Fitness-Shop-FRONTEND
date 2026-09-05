@@ -191,3 +191,86 @@
     transform: translateY(0);
   }
 }
+
+// ── Home Mobile Responsive ──
+@media (max-width: 768px) {
+  .home {
+    &-hero {
+      height: 70vh;
+      min-height: 500px;
+      background-attachment: scroll; // Fix iOS parallax rendering bug
+    }
+
+    &-categories {
+      padding: $spacing-xl 0;
+
+      h2 {
+        font-size: 2rem;
+      }
+    }
+
+    &-category-card {
+      .circle {
+        width: 90px;
+        height: 90px;
+      }
+
+      span {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    &-hero {
+      height: 60vh;
+      min-height: 420px;
+    }
+
+    &-hero-content {
+      padding: 0 $spacing-md;
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+
+      .btn-cta {
+        padding: $spacing-sm $spacing-lg;
+        font-size: 0.95rem;
+      }
+    }
+
+    &-categories {
+      padding: $spacing-lg 0;
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .section-subtitle {
+        font-size: 0.9rem;
+      }
+    }
+
+    &-category-grid {
+      gap: $spacing-md;
+    }
+
+    &-category-card {
+      .circle {
+        width: 75px;
+        height: 75px;
+      }
+
+      span {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

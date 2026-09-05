@@ -1,21 +1,32 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { User, Lock, Mail, Shield, CheckCircle } from 'lucide-react';
+import { User, Lock, Mail, Shield, CheckCircle, Eye, EyeOff } from 'lucide-react'; // 🔥 Imported Eye & EyeOff
 import { toast } from 'sonner';
-import axiosClient from '../../api/axiosClient'; // THE FIX: Needed to call backend!
+import axiosClient from '../../api/axiosClient';
 import './Profile.scss';
 
 const Profile = () => {
   const { user } = useAuth();
   const [name, setName] = useState(user?.name || '');
-  const [password, setPassword] = useState(''); // Only need one field for updating
+
+  // 🔥 Password States
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  // 🔥 Eyeball Toggle States
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
-  // THE FIX: Actually calls the backend to update the profile!
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
-    // We only send the password if they actually typed something new!
+    // 🔥 Strict match check!
+    if (password && password !== confirmPassword) {
+      return toast.error("New passwords do not match!");
+    }
+
     const updateData = { name };
     if (password) {
       updateData.password = password;
@@ -26,7 +37,8 @@ const Profile = () => {
       await axiosClient.put('/auth/profile', updateData);
 
       toast.success('Profile updated successfully!');
-      setPassword(''); // Clear the password field on success
+      setPassword(''); // Clear fields on success
+      setConfirmPassword('');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to update profile');
     } finally {
@@ -80,7 +92,6 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Combined Password update into the same form for cleaner UX */}
             <h2 className="security-title"><Lock size={20} className="icon-red" /> Update Password</h2>
 
             <div className="input-group">
@@ -88,13 +99,46 @@ const Profile = () => {
               <div className="input-wrapper">
                 <Lock size={16} className="input-icon" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Leave blank to keep current password"
                 />
+                {/* 🔥 First Eyeball Toggle */}
+                <button
+                  type="button"
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
+
+            {/* 🔥 Only show Confirm Password if they started typing a new password */}
+            {password.length > 0 && (
+              <div className="input-group">
+                <label>Confirm New Password</label>
+                <div className="input-wrapper">
+                  <Lock size={16} className="input-icon" />
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Retype your new password"
+                    required
+                  />
+                  {/* 🔥 Second Eyeball Toggle */}
+                  <button
+                    type="button"
+                    className="password-toggle-btn"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+            )}
 
             <button type="submit" className="btn-primary" disabled={loading}>
               {loading ? 'Saving...' : 'Save Changes'} <CheckCircle size={20} />

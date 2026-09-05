@@ -386,4 +386,75 @@
       }
     }
   }
+
+  // ── Cart Mobile Responsive ──
+  @media (max-width: 768px) {
+    padding: 2rem 0;
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    &-summary {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 0;
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    &-item {
+      padding: 1rem;
+
+      img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    &-item-details h3 {
+      font-size: 1rem;
+    }
+
+    &-summary {
+      padding: 1.25rem;
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    &-row {
+      font-size: 0.95rem;
+
+      &.total {
+        font-size: 1.2rem;
+      }
+    }
+
+    .cart-btn {
+      padding: 1rem;
+      font-size: 1rem;
+      min-height: 44px;
+    }
+
+    &-empty {
+      padding: 3rem 1.5rem;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
 }

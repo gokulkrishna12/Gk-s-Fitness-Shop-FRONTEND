@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Mail, Lock, LogIn } from 'lucide-react';
+import { Mail, Lock, LogIn, Eye, EyeOff } from 'lucide-react'; // 🔥 Imported Eye & EyeOff
 import { toast } from 'sonner';
 import { loginApi } from '../../api/authApi';
 import './Auth.scss';
@@ -9,6 +9,7 @@ import './Auth.scss';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // 🔥 Added toggle state
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -69,7 +70,6 @@ const Login = () => {
           <div className="input-group">
             <div className="label-row">
               <label>Password</label>
-              {/* THE FIX: Moved Forgot Password HERE, above the input wrapper! */}
               <Link to="/forgot-password" className="forgot-password-link">
                 Forgot Password?
               </Link>
@@ -77,13 +77,24 @@ const Login = () => {
 
             <div className="input-wrapper">
               <Lock className="input-icon" size={18} />
+
+              {/* 🔥 Toggles text vs password */}
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+
+              {/* 🔥 The Clickable Eye Button */}
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 

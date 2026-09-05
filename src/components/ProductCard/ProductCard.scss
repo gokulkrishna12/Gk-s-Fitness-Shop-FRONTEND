@@ -231,4 +231,42 @@
       }
     }
   }
+
+  // ── ProductCard Mobile Responsive ──
+  @media (max-width: 480px) {
+    &-image-wrapper img {
+      padding: 1rem;
+    }
+
+    &-content {
+      padding: 0.9rem;
+    }
+
+    &-title {
+      font-size: 0.95rem;
+    }
+
+    &-price {
+      font-size: 1.2rem;
+    }
+
+    &-rating {
+      font-size: 0.8rem;
+    }
+
+    &-actions {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+
+      button {
+        min-height: 44px;
+        font-size: 0.75rem;
+        padding: 0.5rem;
+      }
+
+      .btn-add {
+        grid-column: 1 / -1;
+      }
+    }
+  }
 }

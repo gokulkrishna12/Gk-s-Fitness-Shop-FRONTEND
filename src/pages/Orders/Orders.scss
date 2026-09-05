@@ -565,3 +565,130 @@
     font-size: 0.95rem;
   }
 }
+
+// ── Orders Mobile Responsive ──
+@media (max-width: 768px) {
+  .orders {
+    padding: 2rem 0;
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    &-header {
+      padding: 1.25rem 1.5rem;
+    }
+
+    &-body {
+      padding: 1.5rem;
+    }
+
+    &-step {
+      span {
+        font-size: 0.75rem;
+      }
+
+      .step-icon {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .orders {
+    padding: 1.5rem 0;
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    &-header {
+      padding: 1rem;
+
+      .order-info span {
+        font-size: 0.85rem;
+      }
+
+      .order-header-actions .order-total {
+        font-size: 1.1rem;
+      }
+    }
+
+    &-body {
+      padding: 1rem;
+    }
+
+    &-item {
+      gap: 1rem;
+      padding: 0.75rem;
+
+      img {
+        width: 55px;
+        height: 55px;
+      }
+
+      div {
+        h4 {
+          font-size: 0.95rem;
+        }
+
+        p {
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    &-tracker {
+      &::before {
+        top: 30px;
+        left: 5%;
+        right: 5%;
+      }
+    }
+
+    &-step {
+      .step-icon {
+        width: 30px;
+        height: 30px;
+
+        svg {
+          width: 14px;
+          height: 14px;
+        }
+      }
+
+      span {
+        font-size: 0.65rem;
+      }
+    }
+
+    .order-footer-actions .btn-cancel-order {
+      width: 100%;
+      min-height: 44px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    }
+
+    &-empty {
+      padding: 3rem 1.5rem;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .compact-cancel-badge {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+}

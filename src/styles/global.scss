@@ -167,3 +167,29 @@ h1, h2, h3, h4, h5, h6 {
     background: $color-primary;
   }
 }
+
+// ══════════════════════════════════════════════
+// Mobile Responsiveness
+// ══════════════════════════════════════════════
+@media (max-width: 768px) {
+  .container {
+    padding: 0 $spacing-md;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline {
+    min-height: 44px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  h1 {
+    font-size: 1.8rem !important;
+  }
+}

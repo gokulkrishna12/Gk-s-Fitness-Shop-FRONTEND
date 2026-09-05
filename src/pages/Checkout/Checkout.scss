@@ -221,3 +221,55 @@
         }
     }
 }
+
+// ── Checkout Mobile Responsive ──
+@media (max-width: 768px) {
+    .checkout-page {
+        padding: 2rem 0;
+
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .shipping-section,
+    .summary-section {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-page {
+        padding: 1.5rem 0;
+
+        h1 {
+            font-size: 1.6rem;
+            margin-bottom: 1.25rem;
+        }
+    }
+
+    .shipping-section,
+    .summary-section {
+        padding: 1.25rem;
+        border-radius: 12px;
+
+        .section-header {
+            margin-bottom: 1.25rem;
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .shipping-form .form-group input {
+        padding: 1rem;
+        min-height: 44px;
+    }
+
+    .summary-section .btn-pay {
+        padding: 1rem;
+        font-size: 1rem;
+        min-height: 44px;
+    }
+}

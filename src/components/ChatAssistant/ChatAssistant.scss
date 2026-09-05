@@ -206,3 +206,26 @@
     transform: translateY(0);
   }
 }
+
+// ── ChatAssistant Mobile Responsive ──
+@media (max-width: 480px) {
+  .chat-assistant {
+    bottom: 16px;
+    right: 16px;
+
+    &-toggle {
+      padding: 8px 14px;
+      font-size: 0.8rem;
+    }
+
+    &-window {
+      height: 400px;
+    }
+
+    &-form {
+      input {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}

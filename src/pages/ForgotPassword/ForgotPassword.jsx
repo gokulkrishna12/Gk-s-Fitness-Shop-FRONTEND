@@ -1,6 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, KeyRound, Lock, ArrowRight, CheckCircle } from 'lucide-react';
+import {
+    Mail,
+    KeyRound,
+    Lock,
+    ArrowRight,
+    CheckCircle,
+    CheckCircle2,
+    Circle,
+    Eye,
+    EyeOff
+} from 'lucide-react';
 import { forgotPasswordApi, resetPasswordApi } from '../../api/authApi';
 import { toast } from 'sonner';
 import './ForgotPassword.scss';
@@ -10,8 +20,33 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
+
+    // 🔥 New States for Eyeball and Validation
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    // 🔥 Password Security Checklist State
+    const [validations, setValidations] = useState({
+        length: false,
+        upper: false,
+        lower: false,
+        number: false,
+        special: false
+    });
+
+    // 🔥 Live Regex checking for the New Password
+    useEffect(() => {
+        setValidations({
+            length: newPassword.length >= 8,
+            upper: /[A-Z]/.test(newPassword),
+            lower: /[a-z]/.test(newPassword),
+            number: /[0-9]/.test(newPassword),
+            special: /[^A-Za-z0-9]/.test(newPassword)
+        });
+    }, [newPassword]);
+
+    const allValid = Object.values(validations).every(Boolean);
 
     const handleSendOtp = async (e) => {
         e.preventDefault();
@@ -32,18 +67,27 @@ const ForgotPassword = () => {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         if (!otp || !newPassword) return toast.error("Please fill all fields");
+        if (!allValid) return toast.error("Please ensure your password meets all security rules");
 
         setLoading(true);
         try {
             await resetPasswordApi({ email, otp, newPassword });
             toast.success("Password Reset Successful! Please login.");
-            navigate('/login'); // Send them back to login
+            navigate('/login');
         } catch (error) {
             toast.error(error.response?.data?.message || "Invalid OTP or failed to reset");
         } finally {
             setLoading(false);
         }
     };
+
+    // Helper component for the checklist
+    const ValidationItem = ({ isValid, text }) => (
+        <div className={`validation-item ${isValid ? 'valid' : ''}`}>
+            {isValid ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+            <span>{text}</span>
+        </div>
+    );
 
     return (
         <div className="forgot-password-page">
@@ -90,20 +134,43 @@ const ForgotPassword = () => {
                                 />
                             </div>
                         </div>
+
                         <div className="form-group">
                             <label>New Password</label>
                             <div className="input-with-icon">
                                 <Lock size={20} />
+
+                                {/* 🔥 Dynamic Input Type for Eyeball */}
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="Enter new secure password"
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                     required
                                 />
+
+                                {/* 🔥 Eyeball Toggle Button */}
+                                <button
+                                    type="button"
+                                    className="password-toggle-btn"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
                             </div>
                         </div>
-                        <button type="submit" className="btn-primary" disabled={loading}>
+
+                        {/* 🔥 Password Security Checklist */}
+                        <div className="password-checklist">
+                            <ValidationItem isValid={validations.length} text="8+ characters" />
+                            <ValidationItem isValid={validations.upper} text="Uppercase letter" />
+                            <ValidationItem isValid={validations.lower} text="Lowercase letter" />
+                            <ValidationItem isValid={validations.number} text="Number" />
+                            <ValidationItem isValid={validations.special} text="Special symbol" />
+                        </div>
+
+                        {/* 🔥 Button disabled until all rules are met! */}
+                        <button type="submit" className="btn-primary" disabled={loading || !allValid}>
                             {loading ? 'Verifying...' : 'Update Password'} <CheckCircle size={20} />
                         </button>
                     </form>

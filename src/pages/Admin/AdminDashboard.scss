@@ -598,3 +598,89 @@ select.admin-select {
     }
   }
 }
+
+// ── AdminDashboard Mobile Responsive ──
+@media (max-width: 768px) {
+  .admin-dashboard-page {
+    padding: 2rem 0;
+
+    .admin-header h1 {
+      font-size: 2rem;
+    }
+
+    .admin-tabs {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-wrap: nowrap;
+
+      &::-webkit-scrollbar {
+        height: 0;
+      }
+
+      button {
+        flex-shrink: 0;
+        font-size: 0.95rem;
+        padding: 0.65rem 1.25rem;
+        min-height: 44px;
+      }
+    }
+
+    .admin-chart-container {
+      padding: 1.25rem;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      padding: 0.75rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-dashboard-page {
+    padding: 1.5rem 0;
+
+    .admin-header h1 {
+      font-size: 1.6rem;
+    }
+
+    .admin-metrics {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .admin-metric-card {
+      padding: 1.25rem;
+    }
+
+    .table-header-flex {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      .btn-add-product {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+      }
+    }
+
+    .admin-form .form-row {
+      flex-direction: column;
+    }
+
+    .admin-table-container {
+      padding: 1rem;
+    }
+
+    .admin-tabs {
+      gap: 0.5rem;
+
+      button {
+        font-size: 0.85rem;
+        padding: 0.6rem 1rem;
+      }
+    }
+  }
+}
