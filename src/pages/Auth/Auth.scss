@@ -1,65 +1,338 @@
-.input-wrapper {
-    position: relative;
+@use '../../styles/variables' as *;
+
+.auth-page {
+    min-height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
 
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        color: rgba(255, 255, 255, 0.4);
-        pointer-events: none;
+    background-image:
+        linear-gradient(to bottom, rgba(14, 10, 7, 0.78), rgba(10, 7, 5, 0.92)),
+        url('../../assets/Home.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.auth-card {
+    background-color: rgba(22, 15, 11, 0.88);
+    backdrop-filter: blur(14px);
+    width: 100%;
+    max-width: 480px;
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(230, 57, 70, 0.2);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.65), 0 0 25px rgba(230, 57, 70, 0.08);
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 1.8rem;
+
+        .brand-logo-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #e63946;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.5px;
+        }
+
+        .motivational-quote {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            line-height: 1.4;
+        }
     }
 
-    input {
-        width: 100%;
-        /* 🔥 We added 2.8rem padding on the right so text doesn't hide behind the eye icon! */
-        padding: 0.8rem 2.8rem 0.8rem 2.8rem;
-        background-color: rgba(0, 0, 0, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 8px;
-        color: #ffffff;
-        font-size: 0.95rem;
-        transition: all 0.2s ease;
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.15rem;
+    }
 
-        &:focus {
-            outline: none;
-            border-color: #e63946;
-            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
-            background-color: rgba(0, 0, 0, 0.65);
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+
+        /* Handles the Forgot Password link and Timer Badge */
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .forgot-password-link {
+                font-size: 0.8rem;
+                color: rgba(255, 255, 255, 0.6);
+                text-decoration: none;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: #e63946;
+                    text-decoration: underline;
+                }
+            }
+
+            .timer-badge {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                font-size: 0.8rem;
+                color: #e63946;
+                background: rgba(230, 57, 70, 0.1);
+                padding: 0.2rem 0.5rem;
+                border-radius: 4px;
+                font-weight: 700;
+            }
+        }
+
+        label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            .input-icon {
+                position: absolute;
+                left: 1rem;
+                color: rgba(255, 255, 255, 0.4);
+                pointer-events: none;
+            }
+
+            input {
+                width: 100%;
+                /* 🔥 The 2.8rem padding on both sides protects the text from the icons! */
+                padding: 0.8rem 2.8rem 0.8rem 2.8rem;
+                background-color: rgba(0, 0, 0, 0.45);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 8px;
+                color: #ffffff;
+                font-size: 0.95rem;
+                transition: all 0.2s ease;
+
+                &:focus {
+                    outline: none;
+                    border-color: #e63946;
+                    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+                    background-color: rgba(0, 0, 0, 0.65);
+                }
+
+                &:disabled {
+                    background-color: rgba(255, 255, 255, 0.05);
+                    color: rgba(255, 255, 255, 0.4);
+                    cursor: not-allowed;
+                }
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.25);
+                }
+            }
+
+            /* 🔥 Styles for our new Eye toggle button */
+            .password-toggle-btn {
+                position: absolute;
+                right: 1rem;
+                background: none;
+                border: none;
+                color: rgba(255, 255, 255, 0.4);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                transition: color 0.2s ease;
+
+                svg {
+                    position: relative;
+                    left: 0;
+                    pointer-events: auto;
+                }
+
+                &:hover {
+                    color: #ffffff;
+                }
+
+                &:focus {
+                    outline: none;
+                    color: #e63946;
+                }
+            }
+        }
+    }
+
+    /* 🔥 Password Checklist Styling */
+    .password-checklist {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        margin-top: -0.2rem;
+        margin-bottom: 0.5rem;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+
+        .validation-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            transition: color 0.2s ease;
+
+            &.valid {
+                color: #4ade80;
+                /* Bright Green */
+            }
+
+            svg {
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    .verified-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem;
+        background-color: rgba(74, 222, 128, 0.1);
+        border: 1px solid rgba(74, 222, 128, 0.3);
+        border-radius: 8px;
+        color: #4ade80;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-auth,
+    .btn-verify-otp {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.85rem;
+        background-color: #e63946;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 15px rgba(230, 57, 70, 0.35);
+
+        &:hover:not(:disabled) {
+            background-color: #c92a37;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.55);
         }
 
         &:disabled {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.4);
+            opacity: 0.5;
             cursor: not-allowed;
-        }
-
-        &::placeholder {
-            color: rgba(255, 255, 255, 0.25);
+            transform: none;
+            box-shadow: none;
         }
     }
 
-    /* 🔥 Styles for our new Eye toggle button */
-    .password-toggle-btn {
-        position: absolute;
-        right: 1rem;
-        background: none;
-        border: none;
-        color: rgba(255, 255, 255, 0.4);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        transition: color 0.2s ease;
+    .btn-verify-otp {
+        background-color: #4ade80;
+        box-shadow: 0 4px 15px rgba(74, 222, 128, 0.2);
 
-        &:hover {
-            color: #ffffff;
+        &:hover:not(:disabled) {
+            background-color: #22c55e;
+            box-shadow: 0 6px 20px rgba(74, 222, 128, 0.4);
+        }
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.4rem;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.55);
+
+        a {
+            color: #e63946;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: #ff6b76;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+/* 🔥 MOBILE RESPONSIVENESS (Fixes Alignment & Width) */
+@media (max-width: 768px) {
+    .auth-page {
+        padding: 1rem;
+        /* Less padding on the main background */
+    }
+
+    .auth-card {
+        padding: 1.5rem 1.2rem;
+        /* Shrunk from 2.5rem so it fits on small phones! */
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        .auth-header {
+            h2 {
+                font-size: 1.5rem;
+                /* Scale down the giant desktop title */
+            }
+
+            .motivational-quote {
+                font-size: 0.8rem;
+            }
         }
 
-        &:focus {
-            outline: none;
-            color: #e63946;
+        .input-group {
+            .input-wrapper {
+                input {
+                    /* 🔥 16px is CRITICAL on mobile to stop iOS from auto-zooming the screen when typing! */
+                    font-size: 16px;
+                    padding: 0.75rem 2.4rem 0.75rem 2.4rem;
+                }
+            }
+        }
+
+        .password-checklist {
+            padding: 0.75rem;
+
+            .validation-item {
+                font-size: 0.75rem;
+            }
+        }
+
+        .btn-auth,
+        .btn-verify-otp {
+            padding: 0.75rem;
+            font-size: 0.9rem;
         }
     }
 }
