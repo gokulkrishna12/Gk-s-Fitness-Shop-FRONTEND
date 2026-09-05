@@ -18,12 +18,12 @@ const ProductCard = ({ product }) => {
         product?.image ||
         'https://via.placeholder.com/300x300?text=No+Image';
 
-    // 🔥 THE BULLETPROOF BYPASS
-    // If your database has 0, we force it to 50 so you can actually click "Add to Cart"!
-    const dbStock = product?.countInStock ?? product?.stock ?? 0;
-    const stockCount = Number(dbStock) > 0 ? Number(dbStock) : 50;
-    const isOutOfStock = false; // 🔥 Forced to false so the button always works!
+    // 🔥 THE REAL OG STOCK LOGIC
+    // Strictly reads the database. No fake 10s, no fake 50s.
+    const stockCount = Number(product?.stock ?? product?.countInStock ?? 0);
+    const isOutOfStock = stockCount <= 0;
 
+    // 🔥 LIVE RATING MATH
     let displayReviews = product?.numReviews || 0;
     let displayRating = product?.rating || 0;
 
