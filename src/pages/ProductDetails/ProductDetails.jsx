@@ -148,9 +148,9 @@ const ProductDetails = () => {
 
     const images = product.images?.length > 0 ? product.images : [product.image || 'https://via.placeholder.com/800x800?text=No+Image'];
 
-    // Auto-fill to 10 if stock is 0
-    const rawStock = product.countInStock ?? product.stock;
-    const stockCount = (rawStock !== undefined && rawStock !== null && Number(rawStock) > 0) ? Number(rawStock) : 10;
+    // 🔥 SMART STOCK FALLBACK: Checks all possible database field names and defaults safely to 10
+    const rawStock = product?.countInStock ?? product?.stock ?? product?.quantity ?? product?.qty;
+    const stockCount = (rawStock !== undefined && rawStock !== null) ? Number(rawStock) : 10;
     const isOutOfStock = stockCount <= 0;
 
     // 🔥 THE FIX: Live Dynamic Math based on the reviews array!
