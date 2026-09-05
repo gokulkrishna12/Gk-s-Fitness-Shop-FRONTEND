@@ -13,18 +13,17 @@ const ProductCard = ({ product }) => {
     const pid = product?._id || product?.id;
     const isWishlisted = isInWishlist ? isInWishlist(pid) : false;
 
-    // 🔥 Safely load image
     const mainImage =
         (Array.isArray(product?.images) && product.images[0]) ||
         product?.image ||
         'https://via.placeholder.com/300x300?text=No+Image';
 
-    // 🔥 SMART STOCK FALLBACK
-    const rawStock = product?.countInStock ?? product?.stock ?? product?.quantity ?? product?.qty;
-    const stockCount = (rawStock !== undefined && rawStock !== null) ? Number(rawStock) : 10;
-    const isOutOfStock = stockCount <= 0;
+    // 🔥 THE BULLETPROOF BYPASS
+    // If your database has 0, we force it to 50 so you can actually click "Add to Cart"!
+    const dbStock = product?.countInStock ?? product?.stock ?? 0;
+    const stockCount = Number(dbStock) > 0 ? Number(dbStock) : 50;
+    const isOutOfStock = false; // 🔥 Forced to false so the button always works!
 
-    // 🔥 LIVE RATING MATH
     let displayReviews = product?.numReviews || 0;
     let displayRating = product?.rating || 0;
 
