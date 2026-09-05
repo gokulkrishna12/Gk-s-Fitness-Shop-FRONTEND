@@ -148,12 +148,12 @@ const ProductDetails = () => {
 
     const images = product.images?.length > 0 ? product.images : [product.image || 'https://via.placeholder.com/800x800?text=No+Image'];
 
-    // 🔥 SMART STOCK FALLBACK: Checks all possible database field names and defaults safely to 10
-    const rawStock = product?.countInStock ?? product?.stock ?? product?.quantity ?? product?.qty;
-    const stockCount = (rawStock !== undefined && rawStock !== null) ? Number(rawStock) : 10;
+    // 🔥 THE REAL OG STOCK LOGIC (Synced with ProductCard)
+    // Strictly reads the database.
+    const stockCount = Number(product?.stock ?? product?.countInStock ?? 0);
     const isOutOfStock = stockCount <= 0;
 
-    // 🔥 THE FIX: Live Dynamic Math based on the reviews array!
+    // 🔥 LIVE RATING MATH
     const liveNumReviews = product.reviews?.length || 0;
     const liveRating = liveNumReviews > 0
         ? product.reviews.reduce((acc, item) => item.rating + acc, 0) / liveNumReviews
@@ -209,7 +209,6 @@ const ProductDetails = () => {
                         <h1>{product.name}</h1>
                         <div className="rating-row">
                             <Star size={18} fill="#fca311" color="#fca311" />
-                            {/* 🔥 Replaced with liveRating & liveNumReviews */}
                             <span>{liveRating.toFixed(1)} ({liveNumReviews} reviews)</span>
                         </div>
                         <div className="price-tag">₹{product.price}</div>
