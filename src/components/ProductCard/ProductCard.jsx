@@ -18,15 +18,14 @@ const ProductCard = ({ product }) => {
         product?.image ||
         'https://via.placeholder.com/300x300?text=No+Image';
 
+    // 🔥 FIXED STOCK LOGIC
     const rawStock = product?.countInStock ?? product?.stock;
-    const stockCount = (rawStock !== undefined && rawStock !== null && Number(rawStock) > 0) ? Number(rawStock) : 10;
+    const stockCount = (rawStock !== undefined && rawStock !== null) ? Number(rawStock) : 0;
     const isOutOfStock = stockCount <= 0;
 
-    // 🔥 THE ULTIMATE FIX: Safely calculate rating from DB or live array!
     let displayReviews = product?.numReviews || 0;
     let displayRating = product?.rating || 0;
 
-    // If the DB hasn't synced yet, this forces the card to do the live math!
     if (product?.reviews && product.reviews.length > 0) {
         displayReviews = product.reviews.length;
         displayRating = product.reviews.reduce((acc, item) => acc + item.rating, 0) / displayReviews;
@@ -95,7 +94,6 @@ const ProductCard = ({ product }) => {
                 <span className="product-card-category">{product?.category || 'Gear'}</span>
                 <h3 className="product-card-title">{product?.name || 'Unnamed Product'}</h3>
 
-                {/* 🔥 ALWAYS YELLOW STAR WITH PERFECT MATH */}
                 <div className="product-card-rating">
                     <Star
                         size={15}
