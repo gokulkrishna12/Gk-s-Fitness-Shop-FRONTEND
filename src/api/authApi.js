@@ -21,6 +21,12 @@ export const forgotPasswordApi = async (email) => {
   return response.data;
 };
 
+// NEW: Verify Forgot Password OTP (before allowing new password entry)
+export const verifyOtpApi = async ({ email, otp }) => {
+  const response = await axiosClient.post('/auth/verify-otp', { email, otp });
+  return response.data;
+};
+
 // NEW: Reset Password with OTP
 export const resetPasswordApi = async ({ email, otp, newPassword }) => {
   const response = await axiosClient.post('/auth/reset-password', { email, otp, newPassword });

@@ -29,6 +29,8 @@ const ForgotPassword = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const navigate = useNavigate();
+
     const [validations, setValidations] = useState({
         length: false,
         upper: false,
@@ -102,8 +104,6 @@ const ForgotPassword = () => {
             setLoading(false);
         }
     };
-
-    const navigate = useNavigate();
 
     const ValidationItem = ({ isValid, text }) => (
         <div className={`validation-item ${isValid ? 'valid' : ''}`}>
