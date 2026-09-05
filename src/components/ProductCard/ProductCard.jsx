@@ -1,4 +1,4 @@
-﻿import { useNavigate } from 'react-dom';
+﻿import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Heart, Zap, Eye, Star } from 'lucide-react';
 import { useShop } from '../../context/ShopContext';
 import { useAuth } from '../../context/AuthContext';
@@ -19,12 +19,12 @@ const ProductCard = ({ product }) => {
         product?.image ||
         'https://via.placeholder.com/300x300?text=No+Image';
 
-    // 🔥 SMART STOCK FALLBACK: Checks all possible DB fields. Defaults to 10 if completely missing, but respects 0!
+    // 🔥 SMART STOCK FALLBACK
     const rawStock = product?.countInStock ?? product?.stock ?? product?.quantity ?? product?.qty;
     const stockCount = (rawStock !== undefined && rawStock !== null) ? Number(rawStock) : 10;
     const isOutOfStock = stockCount <= 0;
 
-    // 🔥 LIVE RATING MATH: Calculates real stars based on the reviews array
+    // 🔥 LIVE RATING MATH
     let displayReviews = product?.numReviews || 0;
     let displayRating = product?.rating || 0;
 
