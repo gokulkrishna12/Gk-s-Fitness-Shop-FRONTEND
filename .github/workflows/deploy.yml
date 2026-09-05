@@ -1,0 +1,42 @@
+name: Deploy Frontend to AWS
+
+on:
+  push:
+    branches:
+      - main # Runs every time you push to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # You can change this if you use Node 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build React App
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_RAZORPAY_KEY: ${{ secrets.VITE_RAZORPAY_KEY }}
+        run: npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1 # Change this if your S3 bucket is in a different region
+
+      - name: Deploy to S3 Bucket
+        run: aws s3 sync dist/ s3://gks-fitness-shop-2026 --delete
+
+      - name: Invalidate CloudFront Cache
+        # Note: Replace E14CQA7CZ9DN6 with your actual CloudFront Distribution ID if it changed!
+        run: aws cloudfront create-invalidation --distribution-id E14CQA7CZ9DN6 --paths "/*"
