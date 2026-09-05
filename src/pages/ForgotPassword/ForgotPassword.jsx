@@ -9,24 +9,26 @@ import {
     CheckCircle2,
     Circle,
     Eye,
-    EyeOff
+    EyeOff,
+    ShieldCheck
 } from 'lucide-react';
-import { forgotPasswordApi, resetPasswordApi } from '../../api/authApi';
+import { forgotPasswordApi, verifyOtpApi, resetPasswordApi } from '../../api/authApi';
 import { toast } from 'sonner';
 import './ForgotPassword.scss';
 
 const ForgotPassword = () => {
-    const [step, setStep] = useState(1); // Step 1: Email, Step 2: OTP & New Password
+    // Step 1: Email | Step 2: OTP Verify | Step 3: New Password
+    const [step, setStep] = useState(1);
+
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    // 🔥 New States for Eyeball and Validation
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
 
-    // 🔥 Password Security Checklist State
     const [validations, setValidations] = useState({
         length: false,
         upper: false,
@@ -35,7 +37,6 @@ const ForgotPassword = () => {
         special: false
     });
 
-    // 🔥 Live Regex checking for the New Password
     useEffect(() => {
         setValidations({
             length: newPassword.length >= 8,
@@ -47,7 +48,9 @@ const ForgotPassword = () => {
     }, [newPassword]);
 
     const allValid = Object.values(validations).every(Boolean);
+    const passwordsMatch = newPassword.length > 0 && newPassword === confirmPassword;
 
+    // Step 1 -> Send OTP
     const handleSendOtp = async (e) => {
         e.preventDefault();
         if (!email) return toast.error("Please enter your email");
@@ -64,10 +67,29 @@ const ForgotPassword = () => {
         }
     };
 
+    // Step 2 -> Verify OTP (unlocks step 3)
+    const handleVerifyOtp = async (e) => {
+        e.preventDefault();
+        if (!otp || otp.length !== 6) return toast.error("Enter the 6-digit OTP");
+
+        setLoading(true);
+        try {
+            await verifyOtpApi({ email, otp });
+            toast.success("OTP Verified! Set your new password.");
+            setStep(3);
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Invalid or expired OTP");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Step 3 -> Update Password
     const handleResetPassword = async (e) => {
         e.preventDefault();
-        if (!otp || !newPassword) return toast.error("Please fill all fields");
-        if (!allValid) return toast.error("Please ensure your password meets all security rules");
+        if (!newPassword || !confirmPassword) return toast.error("Please fill all fields");
+        if (!allValid) return toast.error("Password doesn't meet security rules");
+        if (!passwordsMatch) return toast.error("Passwords do not match");
 
         setLoading(true);
         try {
@@ -75,13 +97,14 @@ const ForgotPassword = () => {
             toast.success("Password Reset Successful! Please login.");
             navigate('/login');
         } catch (error) {
-            toast.error(error.response?.data?.message || "Invalid OTP or failed to reset");
+            toast.error(error.response?.data?.message || "Failed to reset password");
         } finally {
             setLoading(false);
         }
     };
 
-    // Helper component for the checklist
+    const navigate = useNavigate();
+
     const ValidationItem = ({ isValid, text }) => (
         <div className={`validation-item ${isValid ? 'valid' : ''}`}>
             {isValid ? <CheckCircle2 size={13} /> : <Circle size={13} />}
@@ -89,17 +112,26 @@ const ForgotPassword = () => {
         </div>
     );
 
+    const stepTitles = {
+        1: 'Reset Password',
+        2: 'Verify OTP',
+        3: 'Set New Password'
+    };
+
+    const stepSubtitles = {
+        1: "Enter your email and we'll send you a 6-digit code.",
+        2: `We sent a code to ${email}`,
+        3: "Your OTP is verified. Choose a new password."
+    };
+
     return (
         <div className="forgot-password-page">
             <div className="auth-box">
-                <h2>{step === 1 ? 'Reset Password' : 'Enter OTP'}</h2>
-                <p className="auth-subtitle">
-                    {step === 1
-                        ? "Enter your email and we'll send you a 6-digit code."
-                        : `We sent a code to ${email}`}
-                </p>
+                <h2>{stepTitles[step]}</h2>
+                <p className="auth-subtitle">{stepSubtitles[step]}</p>
 
-                {step === 1 ? (
+                {/* STEP 1: EMAIL */}
+                {step === 1 && (
                     <form onSubmit={handleSendOtp} className="auth-form">
                         <div className="form-group">
                             <label>Email Address</label>
@@ -118,8 +150,11 @@ const ForgotPassword = () => {
                             {loading ? 'Sending...' : 'Send Recovery Code'} <ArrowRight size={20} />
                         </button>
                     </form>
-                ) : (
-                    <form onSubmit={handleResetPassword} className="auth-form">
+                )}
+
+                {/* STEP 2: VERIFY OTP */}
+                {step === 2 && (
+                    <form onSubmit={handleVerifyOtp} className="auth-form">
                         <div className="form-group">
                             <label>6-Digit OTP</label>
                             <div className="input-with-icon">
@@ -135,12 +170,19 @@ const ForgotPassword = () => {
                             </div>
                         </div>
 
+                        <button type="submit" className="btn-primary" disabled={loading || otp.length !== 6}>
+                            {loading ? 'Verifying...' : 'Verify OTP'} <ShieldCheck size={20} />
+                        </button>
+                    </form>
+                )}
+
+                {/* STEP 3: NEW PASSWORD + CONFIRM PASSWORD */}
+                {step === 3 && (
+                    <form onSubmit={handleResetPassword} className="auth-form">
                         <div className="form-group">
                             <label>New Password</label>
                             <div className="input-with-icon">
                                 <Lock size={20} />
-
-                                {/* 🔥 Dynamic Input Type for Eyeball */}
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter new secure password"
@@ -148,8 +190,6 @@ const ForgotPassword = () => {
                                     onChange={(e) => setNewPassword(e.target.value)}
                                     required
                                 />
-
-                                {/* 🔥 Eyeball Toggle Button */}
                                 <button
                                     type="button"
                                     className="password-toggle-btn"
@@ -160,7 +200,32 @@ const ForgotPassword = () => {
                             </div>
                         </div>
 
-                        {/* 🔥 Password Security Checklist */}
+                        <div className="form-group">
+                            <label>Confirm Password</label>
+                            <div className="input-with-icon">
+                                <Lock size={20} />
+                                <input
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    placeholder="Re-enter your new password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="password-toggle-btn"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                >
+                                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                            {confirmPassword.length > 0 && (
+                                <span className={`match-hint ${passwordsMatch ? 'valid' : 'invalid'}`}>
+                                    {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
+                                </span>
+                            )}
+                        </div>
+
                         <div className="password-checklist">
                             <ValidationItem isValid={validations.length} text="8+ characters" />
                             <ValidationItem isValid={validations.upper} text="Uppercase letter" />
@@ -169,9 +234,12 @@ const ForgotPassword = () => {
                             <ValidationItem isValid={validations.special} text="Special symbol" />
                         </div>
 
-                        {/* 🔥 Button disabled until all rules are met! */}
-                        <button type="submit" className="btn-primary" disabled={loading || !allValid}>
-                            {loading ? 'Verifying...' : 'Update Password'} <CheckCircle size={20} />
+                        <button
+                            type="submit"
+                            className="btn-primary"
+                            disabled={loading || !allValid || !passwordsMatch}
+                        >
+                            {loading ? 'Updating...' : 'Update Password'} <CheckCircle size={20} />
                         </button>
                     </form>
                 )}
