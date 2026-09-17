@@ -24,7 +24,7 @@ jobs:
       - name: Build React App
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
-          VITE_RAZORPAY_KEY: ${{ secrets.VITE_RAZORPAY_KEY }}
+          VITE_RAZORPAY_KEY_ID: ${{ secrets.VITE_RAZORPAY_KEY_ID }}
         run: npm run build
 
       - name: Configure AWS Credentials
