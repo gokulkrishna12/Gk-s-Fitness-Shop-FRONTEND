@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useMemo } from 'react';
-import { DollarSign, ShoppingBag, Package, AlertTriangle, Trash2, Plus, Edit, X, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { DollarSign, ShoppingBag, Package, AlertTriangle, Trash2, Plus, Edit, X, Upload, Image as ImageIcon, Loader2, MapPin } from 'lucide-react'; // 🔥 MapPin imported
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -17,10 +17,7 @@ const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // 🔥 NEW: State to show a loading spinner on the Save button during image upload
   const [isSaving, setIsSaving] = useState(false);
-
   const [itemToDelete, setItemToDelete] = useState(null);
   const [showProductModal, setShowProductModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -147,7 +144,7 @@ const AdminDashboard = () => {
 
   const handleProductSubmit = async (e) => {
     e.preventDefault();
-    setIsSaving(true); // 🔥 Fix 1: Show loading on button
+    setIsSaving(true);
 
     const formData = new FormData();
     formData.append('name', productForm.name);
@@ -173,13 +170,11 @@ const AdminDashboard = () => {
         toast.success('Product created!');
       }
       setShowProductModal(false);
-
-      // 🔥 Fix 1: Passing 'true' makes it refresh silently instantly without the 10-second loader!
       fetchDashboardData(true);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to save product.');
     } finally {
-      setIsSaving(false); // Stop loading on button
+      setIsSaving(false);
     }
   };
 
@@ -226,6 +221,22 @@ const AdminDashboard = () => {
       <tr key={o._id}>
         <td className="mono">{o._id.substring(o._id.length - 8).toUpperCase()}</td>
         <td>{o.user?.email || 'Guest'}</td>
+
+        {/* 🔥 NEW: Shipping Address Column injected right here */}
+        <td>
+          {o.shippingAddress ? (
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', lineHeight: '1.4', minWidth: '150px' }}>
+              <MapPin size={16} color="#e63946" style={{ marginTop: '2px', flexShrink: 0 }} />
+              <div>
+                <div style={{ fontWeight: '600', color: '#fff' }}>{o.shippingAddress.address}</div>
+                <div>{o.shippingAddress.city}, {o.shippingAddress.postalCode}</div>
+              </div>
+            </div>
+          ) : (
+            <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>No Address</span>
+          )}
+        </td>
+
         <td>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {o.orderItems?.map((item, idx) => (
@@ -271,7 +282,6 @@ const AdminDashboard = () => {
     );
   };
 
-  // 🔥 Helper to render product rows
   const renderProductRow = (p) => {
     const currentStock = p.stock !== undefined ? p.stock : (p.countInStock || 0);
     return (
@@ -296,19 +306,15 @@ const AdminDashboard = () => {
 
   if (loading) return <div className="admin-dashboard-page"><div className="loader container">Loading Dashboard...</div></div>;
 
-  // For uncategorized products (just in case!)
   const uncategorizedProducts = products.filter(p => !categories.includes(p.category));
 
   return (
     <div className="admin-dashboard-page">
-
-      {/* DELETE / CANCEL MODAL */}
       {itemToDelete && (
         <div className="custom-modal-overlay">
           <div className="custom-modal">
             <button className="modal-close" onClick={() => setItemToDelete(null)}><X size={24} /></button>
             <div className="modal-icon"><AlertTriangle size={40} color="#e63946" /></div>
-
             <h3>
               {itemToDelete.type === 'product' ? 'Delete Product?' :
                 itemToDelete.type === 'order-cancel' ? 'Cancel Order?' :
@@ -321,7 +327,6 @@ const AdminDashboard = () => {
                   ? `Are you sure you want to cancel this order? The customer will see the "Cancelled by Admin" reason on their tracker, and stock will be restored.`
                   : `This order is already cancelled. Are you sure you want to permanently delete it from the database?`}
             </p>
-
             <div className="modal-actions">
               <button className="btn-cancel" onClick={() => setItemToDelete(null)}>Go Back</button>
               <button className="btn-confirm-delete" onClick={confirmDelete}>
@@ -332,7 +337,6 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* PRODUCT MODAL */}
       {showProductModal && (
         <div className="custom-modal-overlay">
           <div className="custom-modal product-modal">
@@ -447,7 +451,6 @@ const AdminDashboard = () => {
           </>
         )}
 
-        {/* 🔥 Fix 2: Grouped Products by Category! */}
         {activeTab === 'products' && (
           <div className="admin-products-wrapper">
             <div className="table-header-flex" style={{ marginBottom: '1.5rem' }}>
@@ -457,7 +460,7 @@ const AdminDashboard = () => {
 
             {categories.map(category => {
               const categoryProducts = products.filter(p => p.category === category);
-              if (categoryProducts.length === 0) return null; // Skip empty categories
+              if (categoryProducts.length === 0) return null;
 
               return (
                 <div key={category} className="admin-table-container" style={{ marginBottom: '2rem' }}>
@@ -468,7 +471,6 @@ const AdminDashboard = () => {
                     <thead>
                       <tr>
                         <th>Product</th>
-                        {/* We removed 'Category' column since the whole table is the category! */}
                         <th>Price</th>
                         <th>Stock</th>
                         <th>Actions</th>
@@ -482,7 +484,6 @@ const AdminDashboard = () => {
               );
             })}
 
-            {/* Fallback for products with missing or deleted categories */}
             {uncategorizedProducts.length > 0 && (
               <div className="admin-table-container" style={{ marginBottom: '2rem' }}>
                 <div className="table-header-flex" style={{ paddingBottom: '10px', borderBottom: '1px solid rgba(255,255,255,0.05)', marginBottom: '10px' }}>
@@ -522,6 +523,8 @@ const AdminDashboard = () => {
                     <tr>
                       <th>Order ID</th>
                       <th>User Email</th>
+                      {/* 🔥 NEW: Added Address Column Header */}
+                      <th>Address</th>
                       <th>Items</th>
                       <th>Amount</th>
                       <th>Tracker Status</th>
@@ -545,6 +548,8 @@ const AdminDashboard = () => {
                     <tr>
                       <th>Order ID</th>
                       <th>User Email</th>
+                      {/* 🔥 NEW: Added Address Column Header */}
+                      <th>Address</th>
                       <th>Items</th>
                       <th>Amount</th>
                       <th>Tracker Status</th>
@@ -568,6 +573,8 @@ const AdminDashboard = () => {
                     <tr>
                       <th>Order ID</th>
                       <th>User Email</th>
+                      {/* 🔥 NEW: Added Address Column Header */}
+                      <th>Address</th>
                       <th>Items</th>
                       <th>Amount</th>
                       <th>Tracker Status</th>
