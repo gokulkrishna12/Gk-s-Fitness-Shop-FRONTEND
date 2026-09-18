@@ -1,16 +1,32 @@
-# React + Vite
+# 🏋️‍♂️ GK's Fitness Shop — Frontend Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A high-performance, responsive e-commerce web application engineered for fitness enthusiasts and athletes. Built with React and SCSS, and containerized for production deployment on AWS CloudFront.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [Insert Your CloudFront Link Here]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Key Features
+- **Responsive Athlete UI:** Mobile-first architecture with a custom SCSS design system.
+- **Enhanced Auth Experience:** Email OTP validation, real-time regex security checklists, and password visibility toggles across Login, Register, Forgot Password, and Profile pages.
+- **Seamless Payments:** Integrated Razorpay checkout with client-side cryptographic handling.
+- **Dynamic Catalog & Reviews:** Multimedia community review upload, live star rating math, and instant stock badge synchronization.
+- **Automated CI/CD:** Continuous delivery pipeline configured via GitHub Actions, deploying to AWS S3 and invalidating the AWS CloudFront cache on push.
 
-## React Compiler
+## 🛠️ Tech Stack
+- **Library/Framework:** React.js, React Router
+- **Styling:** Modular SCSS (CSS Grid & Flexbox)
+- **Icons & UI:** Lucide React, Sonner (Toasts), Recharts
+- **Build Tool:** Vite
+- **Deployment:** AWS S3, AWS CloudFront, GitHub Actions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📋 Prerequisites
+Make sure you have the following installed on your local machine:
+- Node.js (v18 or higher)
+- npm or yarn
 
-## Expanding the Oxlint configuration
+## ⚙️ Environment Variables
+Create a `.env` file in the root directory and add the following variables:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```env
+# .env
+VITE_API_URL=http://localhost:5000/api  # Change to your EC2 backend URL for production
+VITE_RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_here
