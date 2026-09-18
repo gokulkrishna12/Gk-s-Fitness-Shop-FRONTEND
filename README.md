@@ -25,8 +25,30 @@ Make sure you have the following installed on your local machine:
 
 ## ⚙️ Environment Variables
 Create a `.env` file in the root directory and add the following variables:
-
-```env
+``env
 # .env
+VITE_API_URL=http://localhost:5000/api  # Change to your EC2 backend URL for production
+VITE_RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_here
+
+💻 Local Development Setup
+Clone the repository:
+
+Bash
+git clone [https://github.com/gokulkrishna12/Gk-s-Fitness-Shop-FRONTEND.git](https://github.com/gokulkrishna12/Gk-s-Fitness-Shop-FRONTEND.git)
+cd Gk-s-Fitness-Shop-FRONTEND
+Install dependencies:
+
+Bash
+npm install
+Start the development server:
+
+Bash
+npm run dev
+The application will be running at http://localhost:5173.
+
+Build for production:
+
+Bash
+npm run build
 VITE_API_URL=http://localhost:5000/api  # Change to your EC2 backend URL for production
 VITE_RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_here
