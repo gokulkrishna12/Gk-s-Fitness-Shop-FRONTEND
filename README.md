@@ -25,10 +25,8 @@ Make sure you have the following installed on your local machine:
 
 ## ⚙️ Environment Variables
 Create a `.env` file in the root directory and add the following variables:
-``env
-# .env
-VITE_API_URL=http://localhost:5000/api  # Change to your EC2 backend URL for production
-VITE_RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_here
+
+```env
 
 💻 Local Development Setup
 Clone the repository:
@@ -50,5 +48,6 @@ Build for production:
 
 Bash
 npm run build
+# .env
 VITE_API_URL=http://localhost:5000/api  # Change to your EC2 backend URL for production
 VITE_RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_here
