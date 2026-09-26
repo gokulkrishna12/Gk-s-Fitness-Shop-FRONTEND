@@ -12,10 +12,10 @@ const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
 const Login = lazy(() => import('./pages/Auth/Login'));
 const Register = lazy(() => import('./pages/Auth/Register'));
-const ForgotPassword = lazy(() => import('./pages/ForgotPassword/ForgotPassword')); // Fixed Path!
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword/ForgotPassword'));
 const Checkout = lazy(() => import('./pages/Checkout/Checkout'));
 const Orders = lazy(() => import('./pages/Orders/Orders'));
-const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard')); // Fixed Path!
+const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'));
 
 // 🔥 2. Create a simple fallback loader
 const PageLoader = () => (
@@ -29,25 +29,29 @@ function App() {
     <AuthProvider>
       <ShopProvider>
         <Router>
-          <Navbar />
-          <Toaster position="top-center" richColors />
+          {/* 🔥 THE FIX: Utilizing your existing app-wrapper and app-main classes to push the footer down */}
+          <div className="app-wrapper">
+            <Navbar />
+            <Toaster position="top-center" richColors />
 
-          {/* 🔥 3. Wrap Routes in Suspense */}
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/catalog" element={<Catalog />} />
-              <Route path="/catalog/:id" element={<ProductDetails />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-            </Routes>
-          </Suspense>
+            <main className="app-main">
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/catalog" element={<Catalog />} />
+                  <Route path="/catalog/:id" element={<ProductDetails />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/orders" element={<Orders />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                </Routes>
+              </Suspense>
+            </main>
 
-          <Footer />
+            <Footer />
+          </div>
         </Router>
       </ShopProvider>
     </AuthProvider>
