@@ -143,7 +143,7 @@
     }
   }
 
-  /* 🔥 COMPACT RED MAGICAL AI BUTTON */
+  /* 🔥 COMPACT RED MAGICAL AI BUTTON - REPAIRED FOR 95+ (Zero CPU Drain) */
   &-toggle {
     background: linear-gradient(135deg, #e63946, #ff4d4d);
     color: #ffffff;
@@ -160,38 +160,20 @@
     font-size: 0.9rem;
     letter-spacing: 0.5px;
 
-    animation: magicPulseRed 2.5s infinite alternate ease-in-out;
-    transition: transform 0.3s ease;
+    /* Replaced the infinite animation loop with a static shadow */
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+
+    /* GPU-accelerated transition for smooth hovering */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
       transform: scale(1.05) translateY(-3px);
-      animation: magicPulseRedHover 1s infinite alternate ease-in-out;
+      box-shadow: 0 8px 25px rgba(230, 57, 70, 0.6);
     }
 
     span {
       white-space: nowrap;
     }
-  }
-}
-
-/* 🔥 The Breathing Glow Animation - RED THEME */
-@keyframes magicPulseRed {
-  0% {
-    box-shadow: 0 0 10px rgba(230, 57, 70, 0.4), 0 0 15px rgba(255, 77, 77, 0.2);
-  }
-
-  100% {
-    box-shadow: 0 0 20px rgba(230, 57, 70, 0.8), 0 0 35px rgba(255, 77, 77, 0.5);
-  }
-}
-
-@keyframes magicPulseRedHover {
-  0% {
-    box-shadow: 0 0 15px rgba(230, 57, 70, 0.6), 0 0 25px rgba(255, 77, 77, 0.4);
-  }
-
-  100% {
-    box-shadow: 0 0 30px rgba(230, 57, 70, 1), 0 0 50px rgba(255, 77, 77, 0.8);
   }
 }
 
