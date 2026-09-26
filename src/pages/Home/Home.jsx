@@ -23,8 +23,7 @@ const categories = [
 const Home = () => {
   const { isAuthenticated } = useAuth();
 
-  // 🔥 THE FIX 1: Ghost Garbage Collector!
-  // If the user logs out or visits as a guest, we forcefully wipe any leftover cart/wishlist memory
+  // 🔥 Ghost Garbage Collector
   useEffect(() => {
     if (!isAuthenticated) {
       localStorage.removeItem('cart');
@@ -33,7 +32,6 @@ const Home = () => {
     }
   }, [isAuthenticated]);
 
-  // 🔥 THE FIX 2: Smooth Scroll to Top
   const handleNavigationClick = () => {
     window.scrollTo({
       top: 0,
@@ -63,7 +61,15 @@ const Home = () => {
               onClick={handleNavigationClick}
             >
               <div className="circle">
-                <img src={cat.image} alt={cat.name} />
+                {/* 🔥 THE FIX: Added explicit dimensions to prevent Layout Shift (CLS) */}
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  width="200"
+                  height="200"
+                  style={{ objectFit: 'cover' }}
+                  loading="lazy"
+                />
               </div>
               <span>{cat.name}</span>
             </Link>
