@@ -3,6 +3,13 @@
 
 <head>
   <meta charset="UTF-8" />
+
+  <!-- 🔥 1. ABSOLUTE FIRST PRIORITY: Download the Hero image immediately! -->
+  <link rel="preload" as="image" href="/src/assets/Home.jpg" fetchpriority="high" />
+
+  <!-- 🔥 2. Preconnect to AWS CloudFront to eliminate DNS handshake delays -->
+  <link rel="preconnect" href="https://d3tcsjoldbupsr.cloudfront.net" crossorigin />
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
@@ -12,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- 🔥 THE FIX: Asynchronous Google Fonts Loading -->
+  <!-- Asynchronous Google Fonts Loading -->
   <link rel="preload" as="style"
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" />
   <link rel="stylesheet"
@@ -22,9 +29,6 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" />
   </noscript>
-
-  <!-- 🔥 LCP FIX: Preload the main home page hero image -->
-  <link rel="preload" as="image" href="/src/assets/Home.jpg" fetchpriority="high" />
 </head>
 
 <body>
