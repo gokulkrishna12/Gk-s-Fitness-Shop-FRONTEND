@@ -2,9 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Home.scss';
-
-// Import local images from the assets folder
-import heroImg from '../../assets/Home.jpg'; // 🔥 THE FIX: Import the hero image directly
+import heroImg from '../../assets/Home.webp';
 import gymEquipmentImg from '../../assets/Gym-Equipments.jpg';
 import wheyImg from '../../assets/Whey-Protien.jpg';
 import creatineImg from '../../assets/Creatine.jpg';
