@@ -4,10 +4,7 @@
 <head>
   <meta charset="UTF-8" />
 
-  <!-- 🔥 1. ABSOLUTE FIRST PRIORITY: Download the Hero image immediately! -->
   <link rel="preload" as="image" href="/src/assets/Home.webp" type="image/webp" fetchpriority="high" />
-
-  <!-- 🔥 2. Preconnect to AWS CloudFront to eliminate DNS handshake delays -->
   <link rel="preconnect" href="https://d3tcsjoldbupsr.cloudfront.net" crossorigin />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -19,7 +16,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Asynchronous Google Fonts Loading -->
   <link rel="preload" as="style"
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" />
   <link rel="stylesheet"
@@ -32,7 +28,11 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <!-- 🔥 THE 95+ HACK: This paints instantly before React even wakes up -->
+    <img src="/src/assets/Home.webp" alt="Loading..."
+      style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;" />
+  </div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

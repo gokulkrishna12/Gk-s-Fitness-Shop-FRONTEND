@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -6,10 +6,8 @@ import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
 import { Toaster } from 'sonner';
 
-// Standard import for Home (Instant load)
 import Home from './pages/Home/Home';
 
-// Lazy imports
 const ChatAssistant = lazy(() => import('./components/ChatAssistant/ChatAssistant'));
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
@@ -27,19 +25,6 @@ const PageLoader = () => (
 );
 
 function App() {
-  // 🔥 THE 95+ SECRET: State to delay non-critical heavy widgets
-  const [loadExtras, setLoadExtras] = useState(false);
-
-  useEffect(() => {
-    // Wait 2.5 seconds AFTER the app boots up to load the AI Assistant.
-    // This guarantees the Hero image gets 100% of the network bandwidth for a perfect LCP.
-    const timer = setTimeout(() => {
-      setLoadExtras(true);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <AuthProvider>
       <ShopProvider>
@@ -48,12 +33,9 @@ function App() {
             <Navbar />
             <Toaster position="top-center" richColors />
 
-            {/* 🔥 Only download and mount the Chat Assistant after the 2.5s timer fires */}
-            {loadExtras && (
-              <Suspense fallback={null}>
-                <ChatAssistant />
-              </Suspense>
-            )}
+            <Suspense fallback={null}>
+              <ChatAssistant />
+            </Suspense>
 
             <main className="app-main">
               <Suspense fallback={<PageLoader />}>
