@@ -20,7 +20,10 @@
 
 <body>
   <div id="root"></div>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- 🔥 THE FIX: Added 'defer' right here so it doesn't block the screen from loading! -->
+  <script defer src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
