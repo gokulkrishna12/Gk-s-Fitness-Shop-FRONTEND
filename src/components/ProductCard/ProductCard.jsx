@@ -4,6 +4,8 @@ import { useShop } from '../../context/ShopContext';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'sonner';
 import './ProductCard.scss';
+import { optimizeCloudinaryUrl } from "../../utils/optimizeImage";
+
 
 const ProductCard = ({ product }) => {
     const { addToCart, toggleWishlist, isInWishlist } = useShop();
@@ -13,10 +15,14 @@ const ProductCard = ({ product }) => {
     const pid = product?._id || product?.id;
     const isWishlisted = isInWishlist ? isInWishlist(pid) : false;
 
-    const mainImage =
+    // 🔥 Get the raw image URL or fallback
+    const rawImage =
         (Array.isArray(product?.images) && product.images[0]) ||
         product?.image ||
         'https://via.placeholder.com/300x300?text=No+Image';
+
+    // 🔥 Apply the Cloudinary optimization to the image
+    const optimizedImage = optimizeCloudinaryUrl(rawImage, 400);
 
     // 🔥 THE REAL OG STOCK LOGIC
     // Strictly reads the database. No fake 10s, no fake 50s.
@@ -79,7 +85,15 @@ const ProductCard = ({ product }) => {
     return (
         <div className="product-card" onClick={handleCardClick}>
             <div className="product-card-image-wrapper">
-                <img src={mainImage} alt={product?.name || 'Product'} />
+                {/* 🔥 SINGLE OPTIMIZED IMAGE TAG */}
+                <img
+                    src={optimizedImage}
+                    alt={product?.name || 'Product'}
+                    width="400"
+                    height="400"
+                    loading="lazy"
+                    style={{ objectFit: 'cover' }}
+                />
                 {product?.category && <span className="product-card-badge">{product.category}</span>}
                 <button
                     type="button"
