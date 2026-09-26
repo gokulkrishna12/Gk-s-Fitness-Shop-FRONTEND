@@ -6,13 +6,12 @@ import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
 import { Toaster } from 'sonner';
 
-// 🔥 THE FIX: Standard import for Home. Never lazy-load the landing page!
 import Home from './pages/Home/Home';
 
-// 🔥 BRINGING BACK THE ASSISTANT: Adjust this path if your file is named differently
-import ChatAssistant from './components/ChatAssistant/ChatAssistant';
+// 🔥 THE 95+ FIX: Make the heavy AI Assistant lazy so it doesn't block the screen load
+const ChatAssistant = lazy(() => import('./components/ChatAssistant/ChatAssistant'));
 
-// Keep the heavy secondary pages as lazy imports
+// Other lazy imports...
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
 const Login = lazy(() => import('./pages/Auth/Login'));
@@ -37,14 +36,14 @@ function App() {
             <Navbar />
             <Toaster position="top-center" richColors />
 
-            {/* 🔥 Global AI Assistant: Placed outside Routes so it never unmounts */}
-            <ChatAssistant />
+            {/* 🔥 Wrap the assistant in a Suspense with NO fallback. It will just silently appear when ready! */}
+            <Suspense fallback={null}>
+              <ChatAssistant />
+            </Suspense>
 
             <main className="app-main">
-              {/* Suspense now only wraps the secondary pages */}
               <Suspense fallback={<PageLoader />}>
                 <Routes>
-                  {/* Home renders instantly now, zero layout shift! */}
                   <Route path="/" element={<Home />} />
                   <Route path="/catalog" element={<Catalog />} />
                   <Route path="/catalog/:id" element={<ProductDetails />} />
