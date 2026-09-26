@@ -6,8 +6,10 @@ import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
 import { Toaster } from 'sonner';
 
-// 🔥 1. Corrected lazy imports based strictly on your folder structure
-const Home = lazy(() => import('./pages/Home/Home'));
+// 🔥 THE FIX: Standard import for Home. Never lazy-load the landing page!
+import Home from './pages/Home/Home';
+
+// Keep the heavy secondary pages as lazy imports
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
 const Login = lazy(() => import('./pages/Auth/Login'));
@@ -17,7 +19,6 @@ const Checkout = lazy(() => import('./pages/Checkout/Checkout'));
 const Orders = lazy(() => import('./pages/Orders/Orders'));
 const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'));
 
-// 🔥 2. Create a simple fallback loader
 const PageLoader = () => (
   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh', color: '#e63946' }}>
     <h2>Loading...</h2>
@@ -29,14 +30,15 @@ function App() {
     <AuthProvider>
       <ShopProvider>
         <Router>
-          {/* 🔥 THE FIX: Utilizing your existing app-wrapper and app-main classes to push the footer down */}
           <div className="app-wrapper">
             <Navbar />
             <Toaster position="top-center" richColors />
 
             <main className="app-main">
+              {/* Suspense now only wraps the secondary pages */}
               <Suspense fallback={<PageLoader />}>
                 <Routes>
+                  {/* Home renders instantly now, zero layout shift! */}
                   <Route path="/" element={<Home />} />
                   <Route path="/catalog" element={<Catalog />} />
                   <Route path="/catalog/:id" element={<ProductDetails />} />
