@@ -2,9 +2,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Home.scss';
-import heroImg from '../../assets/Home.webp';
-
-/* 🔥 The 95+ Fix: All category images updated to lightweight WebP format */
 import gymEquipmentImg from '../../assets/Gym-Equipments.webp';
 import wheyImg from '../../assets/Whey-Protien.webp';
 import creatineImg from '../../assets/Creatine.webp';
@@ -42,9 +39,8 @@ const Home = () => {
   return (
     <div className="home">
       <section className="home-hero">
-        {/* 🔥 THE ULTIMATE LCP FIX: An inline image tag tells the browser to download this immediately! */}
         <img
-          src={heroImg}
+          src="/Home.webp"
           alt="GK Fitness Premium Gym Gear"
           className="home-hero-bg"
           fetchpriority="high"
