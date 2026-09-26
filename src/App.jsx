@@ -9,6 +9,9 @@ import { Toaster } from 'sonner';
 // 🔥 THE FIX: Standard import for Home. Never lazy-load the landing page!
 import Home from './pages/Home/Home';
 
+// 🔥 BRINGING BACK THE ASSISTANT: Adjust this path if your file is named differently
+import AIChat from './components/ChatWidget/AIChat';
+
 // Keep the heavy secondary pages as lazy imports
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
@@ -33,6 +36,9 @@ function App() {
           <div className="app-wrapper">
             <Navbar />
             <Toaster position="top-center" richColors />
+
+            {/* 🔥 Global AI Assistant: Placed outside Routes so it never unmounts */}
+            <AIChat />
 
             <main className="app-main">
               {/* Suspense now only wraps the secondary pages */}
