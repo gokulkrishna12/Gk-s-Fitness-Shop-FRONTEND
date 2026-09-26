@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Home.scss';
 import heroImg from '../../assets/Home.webp';
-import gymEquipmentImg from '../../assets/Gym-Equipments.jpg';
-import wheyImg from '../../assets/Whey-Protien.jpg';
-import creatineImg from '../../assets/Creatine.jpg';
-import proteinBarsImg from '../../assets/Protien-bars.jpg';
-import preworkoutImg from '../../assets/Preworkout.jpg';
-import essentialSuppsImg from '../../assets/Essantial-Supplements.jpg';
+
+/* 🔥 The 95+ Fix: All category images updated to lightweight WebP format */
+import gymEquipmentImg from '../../assets/Gym-Equipments.webp';
+import wheyImg from '../../assets/Whey-Protien.webp';
+import creatineImg from '../../assets/Creatine.webp';
+import proteinBarsImg from '../../assets/Protien-bars.webp';
+import preworkoutImg from '../../assets/Preworkout.webp';
+import essentialSuppsImg from '../../assets/Essantial-Supplements.webp';
 
 const categories = [
   { name: 'Gym Equipments', image: gymEquipmentImg },

@@ -6,9 +6,11 @@ import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
 import { Toaster } from 'sonner';
 
+// Standard imports for instant loading
 import Home from './pages/Home/Home';
+import ChatAssistant from './components/ChatAssistant/ChatAssistant'; // 🔥 Restored to standard import!
 
-const ChatAssistant = lazy(() => import('./components/ChatAssistant/ChatAssistant'));
+// Lazy imports for secondary pages only
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
 const Login = lazy(() => import('./pages/Auth/Login'));
@@ -33,9 +35,8 @@ function App() {
             <Navbar />
             <Toaster position="top-center" richColors />
 
-            <Suspense fallback={null}>
-              <ChatAssistant />
-            </Suspense>
+            {/* 🔥 Restored: No Suspense wrapper here! */}
+            <ChatAssistant />
 
             <main className="app-main">
               <Suspense fallback={<PageLoader />}>
