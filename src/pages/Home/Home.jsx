@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import './Home.scss';
 
 // Import local images from the assets folder
+import heroImg from '../../assets/Home.jpg'; // 🔥 THE FIX: Import the hero image directly
 import gymEquipmentImg from '../../assets/Gym-Equipments.jpg';
 import wheyImg from '../../assets/Whey-Protien.jpg';
 import creatineImg from '../../assets/Creatine.jpg';
@@ -23,7 +24,6 @@ const categories = [
 const Home = () => {
   const { isAuthenticated } = useAuth();
 
-  // 🔥 Ghost Garbage Collector
   useEffect(() => {
     if (!isAuthenticated) {
       localStorage.removeItem('cart');
@@ -42,6 +42,14 @@ const Home = () => {
   return (
     <div className="home">
       <section className="home-hero">
+        {/* 🔥 THE ULTIMATE LCP FIX: An inline image tag tells the browser to download this immediately! */}
+        <img
+          src={heroImg}
+          alt="GK Fitness Premium Gym Gear"
+          className="home-hero-bg"
+          fetchpriority="high"
+        />
+
         <div className="home-hero-content">
           <h1>Everything You Need, All in One Place.</h1>
           <p>Discover our curated collection of premium gym gear and supplements. Shop the best quality to fuel your performance.</p>
@@ -61,7 +69,6 @@ const Home = () => {
               onClick={handleNavigationClick}
             >
               <div className="circle">
-                {/* 🔥 THE FIX: Added explicit dimensions to prevent Layout Shift (CLS) */}
                 <img
                   src={cat.image}
                   alt={cat.name}
