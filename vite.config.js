@@ -6,9 +6,15 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          // 🔥 Safely isolates the React engine, speeding up JS evaluation time in Lighthouse
-          vendor: ['react', 'react-dom', 'react-router-dom'],
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            // 🔥 Safely extracts React engine to speed up JS evaluation time
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-core'
+            }
+            // We intentionally DO NOT return a catch-all 'vendor' here. 
+            // We let Vite naturally split the rest to prevent network traffic jams!
+          }
         }
       }
     }
