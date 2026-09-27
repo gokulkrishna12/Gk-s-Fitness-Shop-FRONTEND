@@ -6,11 +6,11 @@ import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
 import { Toaster } from 'sonner';
 
-// Standard imports for instant loading
+// Only Home stays eager — it's the first paint
 import Home from './pages/Home/Home';
-import ChatAssistant from './components/ChatAssistant/ChatAssistant'; // 🔥 Restored to standard import!
 
-// Lazy imports for secondary pages only
+// Everything else is lazy, including ChatAssistant
+const ChatAssistant = lazy(() => import('./components/ChatAssistant/ChatAssistant'));
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
 const Login = lazy(() => import('./pages/Auth/Login'));
@@ -35,8 +35,10 @@ function App() {
             <Navbar />
             <Toaster position="top-center" richColors />
 
-            {/* 🔥 Restored: No Suspense wrapper here! */}
-            <ChatAssistant />
+            {/* fallback=null: chat widget pops in silently once loaded, never blocks the page */}
+            <Suspense fallback={null}>
+              <ChatAssistant />
+            </Suspense>
 
             <main className="app-main">
               <Suspense fallback={<PageLoader />}>
