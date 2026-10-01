@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
 import { Toaster } from 'sonner';
+import OAuthSuccess from './components/OAuthSuccess';
 
 // Only Home stays eager — it's the first paint
 import Home from './pages/Home/Home';
@@ -52,6 +53,7 @@ function App() {
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/oauth-success" element={<OAuthSuccess />} />
                 </Routes>
               </Suspense>
             </main>

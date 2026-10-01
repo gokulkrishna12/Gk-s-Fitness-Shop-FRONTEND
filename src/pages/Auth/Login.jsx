@@ -112,4 +112,40 @@ const Login = () => {
   );
 };
 
+<div style={{ marginTop: '20px', textAlign: 'center' }}>
+  <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
+    <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
+    <span style={{ padding: '0 10px', color: '#888', fontSize: '14px' }}>OR</span>
+    <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
+  </div>
+
+  <button
+    type="button"
+    // 🔥 This kicks off the Passport.js flow on your backend!
+    onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      padding: '12px',
+      backgroundColor: '#fff',
+      color: '#3c4043',
+      border: '1px solid #dadce0',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      fontSize: '15px',
+      fontWeight: '600',
+      gap: '12px',
+    }}
+  >
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+      alt="Google"
+      style={{ width: '20px', height: '20px' }}
+    />
+    Continue with Google
+  </button>
+</div>
+
 export default Login;
