@@ -7,7 +7,7 @@ import { loginApi } from '../../api/authApi';
 import './Auth.scss';
 
 // 🔥 IMPORT THE BACKGROUND DIRECTLY
-import bgImage from '../../assets/bg.jpg';
+import bgImage from '../../assets/bg.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
