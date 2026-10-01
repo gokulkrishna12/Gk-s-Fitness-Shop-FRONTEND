@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Mail, Lock, LogIn, Eye, EyeOff } from 'lucide-react'; // 🔥 Imported Eye & EyeOff
+import { Mail, Lock, LogIn, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 import { loginApi } from '../../api/authApi';
 import './Auth.scss';
 
+// 🔥 IMPORT THE BACKGROUND DIRECTLY
+import bgImage from '../../assets/bg.jpg';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // 🔥 Added toggle state
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -42,7 +45,16 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-page">
+    <div
+      className="auth-page"
+      // 🔥 APPLY BACKGROUND VIA INLINE STYLES FOR VITE CLOUDFRONT COMPATIBILITY
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <div className="auth-card">
         <div className="auth-header">
           <p className="brand-logo-title">GK's Fitness</p>
@@ -77,8 +89,6 @@ const Login = () => {
 
             <div className="input-wrapper">
               <Lock className="input-icon" size={18} />
-
-              {/* 🔥 Toggles text vs password */}
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
@@ -86,8 +96,6 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-
-              {/* 🔥 The Clickable Eye Button */}
               <button
                 type="button"
                 className="password-toggle-btn"
@@ -104,6 +112,42 @@ const Login = () => {
           </button>
         </form>
 
+        {/* 🔥 GOOGLE OAUTH BUTTON INTEGRATED PROPERLY */}
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
+            <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
+            <span style={{ padding: '0 10px', color: '#888', fontSize: '14px' }}>OR</span>
+            <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              padding: '12px',
+              backgroundColor: '#fff',
+              color: '#3c4043',
+              border: '1px solid #dadce0',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '15px',
+              fontWeight: '600',
+              gap: '12px',
+            }}
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+              alt="Google"
+              style={{ width: '20px', height: '20px' }}
+            />
+            Continue with Google
+          </button>
+        </div>
+
         <div className="auth-footer">
           New to the gym? <Link to="/register">Create Athlete Account</Link>
         </div>
@@ -111,41 +155,5 @@ const Login = () => {
     </div>
   );
 };
-
-<div style={{ marginTop: '20px', textAlign: 'center' }}>
-  <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
-    <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
-    <span style={{ padding: '0 10px', color: '#888', fontSize: '14px' }}>OR</span>
-    <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
-  </div>
-
-  <button
-    type="button"
-    // 🔥 This kicks off the Passport.js flow on your backend!
-    onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      padding: '12px',
-      backgroundColor: '#fff',
-      color: '#3c4043',
-      border: '1px solid #dadce0',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      fontSize: '15px',
-      fontWeight: '600',
-      gap: '12px',
-    }}
-  >
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-      alt="Google"
-      style={{ width: '20px', height: '20px' }}
-    />
-    Continue with Google
-  </button>
-</div>
 
 export default Login;
