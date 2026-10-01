@@ -6,9 +6,6 @@ import { toast } from 'sonner';
 import { loginApi } from '../../api/authApi';
 import './Auth.scss';
 
-// 🔥 IMPORT THE BACKGROUND DIRECTLY
-import bgImage from '../../assets/bg.png';
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,12 +44,11 @@ const Login = () => {
   return (
     <div
       className="auth-page"
-      // 🔥 APPLY BACKGROUND VIA INLINE STYLES FOR VITE CLOUDFRONT COMPATIBILITY
+      // 🔥 CRASH-PROOF FIX: Using a solid dark color instead of a missing image file
       style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundColor: '#16161a',
+        minHeight: '100vh',
+        width: '100%'
       }}
     >
       <div className="auth-card">
@@ -112,7 +108,7 @@ const Login = () => {
           </button>
         </form>
 
-        {/* 🔥 GOOGLE OAUTH BUTTON INTEGRATED PROPERLY */}
+        {/* 🔥 GOOGLE OAUTH BUTTON */}
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
             <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
