@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { User, Lock, Mail, Shield, CheckCircle, Eye, EyeOff } from 'lucide-react'; // 🔥 Imported Eye & EyeOff
+import { User, Lock, Mail, Shield, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 import axiosClient from '../../api/axiosClient';
 import './Profile.scss';
