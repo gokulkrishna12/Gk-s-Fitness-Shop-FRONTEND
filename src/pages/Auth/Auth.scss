@@ -9,15 +9,17 @@
     padding: 2rem 1rem;
     position: relative;
 
-    /* 🔥 FIX: Fallback color + absolute path to the public folder bypassing Vite's bundler */
     background-color: #16161a;
+    /* 🔥 FIX: Added ?v=1 cache-buster */
     background-image:
         linear-gradient(to bottom, rgba(14, 10, 7, 0.78), rgba(10, 7, 5, 0.92)),
-        url('/Home.jpg');
+        url('/Home.webp?v=1');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
+
+/* ... keep all existing styles below exactly as they were ... */
 
 .auth-card {
     background-color: rgba(22, 15, 11, 0.88);

@@ -12,8 +12,8 @@ const OAuthSuccess = () => {
             // Securely store the JWT
             localStorage.setItem('token', token);
 
-            // Redirect the authenticated user to the home page
-            navigate('/');
+            // 🔥 FIX: Hard redirect forces React to reload and update AuthContext instantly!
+            window.location.href = '/';
         } else {
             navigate('/login');
         }

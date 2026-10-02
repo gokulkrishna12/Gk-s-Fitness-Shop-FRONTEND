@@ -11,8 +11,8 @@ import {
   KeyRound,
   Clock,
   Send,
-  Eye,       // 🔥 Imported Eye
-  EyeOff     // 🔥 Imported EyeOff
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { otpApi } from '../../api/otpApi';
@@ -25,19 +25,15 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
 
-  // 🔥 State to toggle password visibility
   const [showPassword, setShowPassword] = useState(false);
-
-  // Flow steps: 1 = Enter Details, 2 = Verify OTP, 3 = Set Password
   const [step, setStep] = useState(1);
-  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes = 300 seconds
+  const [timeLeft, setTimeLeft] = useState(300);
   const [timerActive, setTimerActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // 5-Minute Countdown Clock Logic
   useEffect(() => {
     let timer;
     if (timerActive && timeLeft > 0) {
@@ -55,7 +51,6 @@ const Register = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Password Security Checklist
   const [validations, setValidations] = useState({
     length: false,
     upper: false,
@@ -76,7 +71,6 @@ const Register = () => {
 
   const allValid = Object.values(validations).every(Boolean);
 
-  // STEP 1: Send OTP to Backend
   const handleSendOtp = async (e) => {
     e?.preventDefault();
     if (!name.trim() || !email.trim()) {
@@ -102,7 +96,6 @@ const Register = () => {
     }
   };
 
-  // STEP 2: Verify OTP with Backend
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     if (!otp || otp.length < 4) {
@@ -123,7 +116,6 @@ const Register = () => {
     }
   };
 
-  // STEP 3: Final Register
   const handleRegister = async (e) => {
     e.preventDefault();
     if (!allValid) {
@@ -174,7 +166,6 @@ const Register = () => {
           </p>
         </div>
 
-        {/* STEP 1: Name & Email */}
         {step === 1 && (
           <form onSubmit={handleSendOtp}>
             <div className="input-group">
@@ -212,7 +203,6 @@ const Register = () => {
           </form>
         )}
 
-        {/* STEP 2: Enter OTP & Countdown */}
         {step === 2 && (
           <form onSubmit={handleVerifyOtp}>
             <div className="input-group">
@@ -253,7 +243,6 @@ const Register = () => {
           </form>
         )}
 
-        {/* STEP 3: Password Setup */}
         {step === 3 && (
           <form onSubmit={handleRegister}>
             <div className="verified-badge">
@@ -264,8 +253,6 @@ const Register = () => {
               <label>Set Secure Password</label>
               <div className="input-wrapper">
                 <Lock className="input-icon" size={18} />
-
-                {/* 🔥 The input toggles between 'text' and 'password' */}
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
@@ -274,8 +261,6 @@ const Register = () => {
                   autoFocus
                   required
                 />
-
-                {/* 🔥 The clickable Eye button */}
                 <button
                   type="button"
                   className="password-toggle-btn"
@@ -286,7 +271,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* This is your existing checklist that handles the green text! */}
             <div className="password-checklist">
               <ValidationItem isValid={validations.length} text="8+ characters" />
               <ValidationItem isValid={validations.upper} text="Uppercase letter" />
