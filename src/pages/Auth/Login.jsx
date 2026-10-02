@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   const handleGoogleAuth = () => {
-    window.location.href = 'http://ec2-100-48-98-100.compute-1.amazonaws.com:5000/api/auth/google';
+    window.location.href = 'https://d3tcsjoldbupsr.cloudfront.net/api/auth/google/callback';
   };
 
   return (
