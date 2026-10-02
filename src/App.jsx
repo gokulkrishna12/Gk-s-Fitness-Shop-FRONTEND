@@ -63,9 +63,10 @@ function App() {
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/oauth-success" element={<OAuthSuccess />} />
 
-                  {/* 🔥 FIX: Cart and Wishlist are now Public */}
+                  {/* 🔥 FIX: Cart, Wishlist, and Orders are now Public */}
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/orders" element={<Orders />} />
 
                   {/* Protected Routes (Login required) */}
                   {/* 🔥 FIX: Profile route successfully registered */}

@@ -39,9 +39,7 @@ const Login = () => {
   };
 
   const handleGoogleAuth = () => {
-    // 🔥 FIX: Dynamically targets your AWS URL if available, else localhost
-    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    window.location.href = `${baseUrl}/api/auth/google`;
+    window.location.href = 'http://ec2-100-48-98-100.compute-1.amazonaws.com:5000/api/auth/google';
   };
 
   return (
