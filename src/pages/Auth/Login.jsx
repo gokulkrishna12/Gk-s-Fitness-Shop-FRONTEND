@@ -24,13 +24,10 @@ const Login = () => {
     try {
       setIsLoading(true);
       toast.loading('Authenticating...');
-
       const response = await loginApi({ email, password });
       toast.dismiss();
-
       const { user, token } = response;
       login(user, token);
-
       toast.success('Welcome back Athlete!');
       navigate('/');
     } catch (error) {
@@ -41,16 +38,14 @@ const Login = () => {
     }
   };
 
+  const handleGoogleAuth = () => {
+    // 🔥 FIX: Dynamically targets your AWS URL if available, else localhost
+    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    window.location.href = `${baseUrl}/api/auth/google`;
+  };
+
   return (
-    <div
-      className="auth-page"
-      // 🔥 CRASH-PROOF FIX: Using a solid dark color instead of a missing image file
-      style={{
-        backgroundColor: '#16161a',
-        minHeight: '100vh',
-        width: '100%'
-      }}
-    >
+    <div className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
           <p className="brand-logo-title">GK's Fitness</p>
@@ -108,7 +103,6 @@ const Login = () => {
           </button>
         </form>
 
-        {/* 🔥 GOOGLE OAUTH BUTTON */}
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
             <div style={{ flex: 1, height: '1px', backgroundColor: '#333' }}></div>
@@ -118,7 +112,7 @@ const Login = () => {
 
           <button
             type="button"
-            onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
+            onClick={handleGoogleAuth}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -135,11 +129,13 @@ const Login = () => {
               gap: '12px',
             }}
           >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-              alt="Google"
-              style={{ width: '20px', height: '20px' }}
-            />
+            {/* 🔥 FIX: Inline SVG Logo will NEVER break or fail to load */}
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z" />
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.27v3.15C3.25 21.37 7.33 24 12 24z" />
+              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.27C.46 8.2.01 10.05.01 12s.45 3.8 1.26 5.42l4.01-3.15z" />
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.25 2.63 1.27 6.58l4.01 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+            </svg>
             Continue with Google
           </button>
         </div>

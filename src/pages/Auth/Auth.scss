@@ -9,9 +9,11 @@
     padding: 2rem 1rem;
     position: relative;
 
+    /* 🔥 FIX: Fallback color + absolute path to the public folder bypassing Vite's bundler */
+    background-color: #16161a;
     background-image:
         linear-gradient(to bottom, rgba(14, 10, 7, 0.78), rgba(10, 7, 5, 0.92)),
-        url('../../assets/Home.jpg');
+        url('/Home.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -67,7 +69,6 @@
         flex-direction: column;
         gap: 0.35rem;
 
-        /* Handles the Forgot Password link and Timer Badge */
         .label-row {
             display: flex;
             justify-content: space-between;
@@ -118,7 +119,6 @@
 
             input {
                 width: 100%;
-                /* 🔥 The 2.8rem padding on both sides protects the text from the icons! */
                 padding: 0.8rem 2.8rem 0.8rem 2.8rem;
                 background-color: rgba(0, 0, 0, 0.45);
                 border: 1px solid rgba(255, 255, 255, 0.12);
@@ -145,7 +145,6 @@
                 }
             }
 
-            /* 🔥 Styles for our new Eye toggle button */
             .password-toggle-btn {
                 position: absolute;
                 right: 1rem;
@@ -177,7 +176,6 @@
         }
     }
 
-    /* 🔥 Password Checklist Styling */
     .password-checklist {
         display: flex;
         flex-direction: column;
@@ -199,7 +197,6 @@
 
             &.valid {
                 color: #4ade80;
-                /* Bright Green */
             }
 
             svg {
@@ -286,16 +283,13 @@
     }
 }
 
-/* 🔥 MOBILE RESPONSIVENESS (Fixes Alignment & Width) */
 @media (max-width: 768px) {
     .auth-page {
         padding: 1rem;
-        /* Less padding on the main background */
     }
 
     .auth-card {
         padding: 1.5rem 1.2rem;
-        /* Shrunk from 2.5rem so it fits on small phones! */
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
@@ -303,7 +297,6 @@
         .auth-header {
             h2 {
                 font-size: 1.5rem;
-                /* Scale down the giant desktop title */
             }
 
             .motivational-quote {
@@ -314,7 +307,6 @@
         .input-group {
             .input-wrapper {
                 input {
-                    /* 🔥 16px is CRITICAL on mobile to stop iOS from auto-zooming the screen when typing! */
                     font-size: 16px;
                     padding: 0.75rem 2.4rem 0.75rem 2.4rem;
                 }
