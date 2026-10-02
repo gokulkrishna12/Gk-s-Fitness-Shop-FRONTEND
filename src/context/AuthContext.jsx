@@ -14,17 +14,16 @@ export const AuthProvider = ({ children }) => {
         return !!localStorage.getItem('token');
     });
 
-    // 3. Instantly check if they are an admin using the cheat code
+    // 3. Check if they are an admin based strictly on their database role
     const [isAdmin, setIsAdmin] = useState(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
-            return parsedUser.email === 'gokuldinesh32@gmail.com' || parsedUser.isAdmin === true || parsedUser.role === 'admin';
+            return parsedUser.role === 'admin';
         }
         return false;
     });
 
-    // We no longer need to wait, so loading is always false!
     const [loading, setLoading] = useState(false);
 
     const login = (userData, token) => {
@@ -33,7 +32,8 @@ export const AuthProvider = ({ children }) => {
         setUser(userData);
         setIsAuthenticated(true);
 
-        if (userData.email === 'gokuldinesh32@gmail.com' || userData.isAdmin === true || userData.role === 'admin') {
+        // Dynamic database role verification
+        if (userData.role === 'admin') {
             setIsAdmin(true);
         } else {
             setIsAdmin(false);
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
 
-        // 🔥 THE FIX: Deep clean the ghost cart and wishlist memory instantly!
+        // Deep clean ghost cart and wishlist memory instantly
         localStorage.removeItem('cart');
         localStorage.removeItem('wishlist');
         localStorage.removeItem('cartItems');
