@@ -1,15 +1,15 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
 import { Toaster } from 'sonner';
-import OAuthSuccess from './components/OAuthSuccess';
 import Home from './pages/Home/Home';
 
 // Lazy loaded components
 const ChatAssistant = lazy(() => import('./components/ChatAssistant/ChatAssistant'));
+const OAuthSuccess = lazy(() => import('./components/OAuthSuccess'));
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails/ProductDetails'));
 const Login = lazy(() => import('./pages/Auth/Login'));
@@ -20,8 +20,6 @@ const Orders = lazy(() => import('./pages/Orders/Orders'));
 const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
 const Wishlist = lazy(() => import('./pages/Wishlist/Wishlist'));
-
-// 🔥 FIX: Successfully imported the Profile component
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 const PageLoader = () => (
@@ -38,7 +36,33 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+// Mount non-critical widgets only after the page has loaded and the browser is idle
+function useDeferredMount() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const go = () => { if (!cancelled) setReady(true); };
+    const run = () => {
+      if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 3000 });
+      else setTimeout(go, 1500);
+    };
+
+    if (document.readyState === 'complete') run();
+    else window.addEventListener('load', run, { once: true });
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', run);
+    };
+  }, []);
+
+  return ready;
+}
+
 function App() {
+  const showChat = useDeferredMount();
+
   return (
     <AuthProvider>
       <ShopProvider>
@@ -47,14 +71,16 @@ function App() {
             <Navbar />
             <Toaster position="top-center" richColors />
 
-            <Suspense fallback={null}>
-              <ChatAssistant />
-            </Suspense>
+            {showChat && (
+              <Suspense fallback={null}>
+                <ChatAssistant />
+              </Suspense>
+            )}
 
             <main className="app-main">
               <Suspense fallback={<PageLoader />}>
                 <Routes>
-                  {/* Public Routes (Accessible by all users) */}
+                  {/* Public Routes */}
                   <Route path="/" element={<Home />} />
                   <Route path="/catalog" element={<Catalog />} />
                   <Route path="/catalog/:id" element={<ProductDetails />} />
@@ -62,17 +88,13 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/oauth-success" element={<OAuthSuccess />} />
-
-                  {/* 🔥 FIX: Cart, Wishlist, and Orders are now Public */}
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/orders" element={<Orders />} />
 
-                  {/* Protected Routes (Login required) */}
-                  {/* 🔥 FIX: Profile route successfully registered */}
+                  {/* Protected Routes */}
                   <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                   <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-                  <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
                   <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
                 </Routes>
               </Suspense>

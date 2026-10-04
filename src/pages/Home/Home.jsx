@@ -39,12 +39,16 @@ const Home = () => {
   return (
     <div className="home">
       <section className="home-hero">
-        <img
-          src="/Home.webp"
-          alt="GK Fitness Premium Gym Gear"
-          className="home-hero-bg"
-          fetchpriority="high"
-        />
+        <picture>
+          <source media="(max-width: 800px)" srcSet="/Home-800.webp" type="image/webp" />
+          <img
+            src="/Home-1600.webp"
+            alt="GK Fitness Premium Gym Gear"
+            className="home-hero-bg"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
 
         <div className="home-hero-content">
           <h1>Everything You Need, All in One Place.</h1>

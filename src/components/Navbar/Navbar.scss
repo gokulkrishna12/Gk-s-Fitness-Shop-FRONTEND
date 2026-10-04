@@ -1,6 +1,10 @@
 @use '../../styles/variables' as *;
 @use 'sass:color';
 
+// Accessible red for buttons with white text (contrast about 6.2:1, passes WCAG AA)
+$gk-btn-red: #c1121f;
+$gk-btn-red-hover: #a50f1b;
+
 .navbar {
   position: sticky;
   top: 0;
@@ -117,7 +121,7 @@
   }
 
   .nav-badge {
-    background-color: #e63946;
+    background-color: $gk-btn-red;
     color: #ffffff;
     font-size: 0.7rem;
     font-weight: 800;
@@ -171,7 +175,7 @@
       font-size: 0.88rem;
       font-weight: 700;
       color: #ffffff;
-      background-color: #e63946;
+      background-color: $gk-btn-red;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -181,7 +185,7 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
-        background-color: #c92a37;
+        background-color: $gk-btn-red-hover;
         box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
         transform: translateY(-1px);
       }
@@ -196,13 +200,13 @@
       font-size: 0.88rem;
       font-weight: 700;
       color: #ffffff;
-      background-color: #e63946;
+      background-color: $gk-btn-red;
       border-radius: 8px;
       text-decoration: none;
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: #c92a37;
+        background-color: $gk-btn-red-hover;
       }
     }
   }
@@ -277,7 +281,7 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.75rem;
-      background-color: #e63946;
+      background-color: $gk-btn-red;
       color: #ffffff;
       border: none;
       border-radius: 8px;

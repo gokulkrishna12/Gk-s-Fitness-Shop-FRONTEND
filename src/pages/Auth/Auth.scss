@@ -1,5 +1,9 @@
 @use '../../styles/variables' as *;
 
+// Accessible red for buttons with white text (contrast about 6.2:1, passes WCAG AA)
+$gk-btn-red: #c1121f;
+$gk-btn-red-hover: #a50f1b;
+
 .auth-page {
     min-height: 100vh;
     width: 100%;
@@ -10,16 +14,13 @@
     position: relative;
 
     background-color: #16161a;
-    /* 🔥 FIX: Added ?v=1 cache-buster */
     background-image:
         linear-gradient(to bottom, rgba(14, 10, 7, 0.78), rgba(10, 7, 5, 0.92)),
-        url('/Home.webp?v=1');
+        url('/Home-800.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
-
-/* ... keep all existing styles below exactly as they were ... */
 
 .auth-card {
     background-color: rgba(22, 15, 11, 0.88);
@@ -143,7 +144,7 @@
                 }
 
                 &::placeholder {
-                    color: rgba(255, 255, 255, 0.25);
+                    color: rgba(255, 255, 255, 0.5);
                 }
             }
 
@@ -194,7 +195,7 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.65);
             transition: color 0.2s ease;
 
             &.valid {
@@ -229,7 +230,7 @@
         gap: 0.5rem;
         width: 100%;
         padding: 0.85rem;
-        background-color: #e63946;
+        background-color: $gk-btn-red;
         color: #ffffff;
         border: none;
         border-radius: 8px;
@@ -242,7 +243,7 @@
         box-shadow: 0 4px 15px rgba(230, 57, 70, 0.35);
 
         &:hover:not(:disabled) {
-            background-color: #c92a37;
+            background-color: $gk-btn-red-hover;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(230, 57, 70, 0.55);
         }
@@ -257,6 +258,7 @@
 
     .btn-verify-otp {
         background-color: #4ade80;
+        color: #052e16; // dark text on light green (white was only about 1.7:1)
         box-shadow: 0 4px 15px rgba(74, 222, 128, 0.2);
 
         &:hover:not(:disabled) {

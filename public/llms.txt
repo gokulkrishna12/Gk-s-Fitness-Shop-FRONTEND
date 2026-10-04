@@ -1,0 +1,11 @@
+# GK's Fitness
+
+> GK's Fitness is an online store for premium gym equipment, whey protein, creatine, pre-workouts and supplements.
+
+## Main pages
+
+- [Home](https://d3tcsjoldbupsr.cloudfront.net/): Featured gear and supplements
+- [Catalog](https://d3tcsjoldbupsr.cloudfront.net/catalog): Browse all products
+- [Cart](https://d3tcsjoldbupsr.cloudfront.net/cart): Review items before checkout
+- [Register](https://d3tcsjoldbupsr.cloudfront.net/register): Create an account
+- [Login](https://d3tcsjoldbupsr.cloudfront.net/login): Sign in to your account
