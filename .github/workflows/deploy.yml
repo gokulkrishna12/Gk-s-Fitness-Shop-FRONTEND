@@ -3,7 +3,7 @@ name: Deploy Frontend to AWS
 on:
   push:
     branches:
-      - main
+      - main # Runs every time you push to the main branch
 
 jobs:
   build-and-deploy:
@@ -32,28 +32,43 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: us-east-1 # Change this if your S3 bucket is in a different region
 
-      # Hashed JS/CSS files in assets/ never change, so cache for 1 year
+      # 1) Hashed JS/CSS/image files in assets/ never change -> cache for 1 year.
+      #    (No --delete here, so users who still have an old tab open can
+      #     still load their old chunks after a new deploy.)
       - name: Deploy hashed assets (long cache)
         run: |
           aws s3 sync dist/assets s3://gks-fitness-shop-2026/assets \
-            --delete \
             --cache-control "public, max-age=31536000, immutable"
 
-      # Files without a hash (images in public, llms.txt, robots.txt, favicon): 1 day cache
+      # 2) Files WITHOUT a hash (llms.txt, robots.txt, favicon, other public images) -> 1 day cache.
       - name: Deploy other static files (short cache)
         run: |
           aws s3 sync dist/ s3://gks-fitness-shop-2026 \
             --delete \
             --exclude "assets/*" \
             --exclude "index.html" \
+            --exclude "Home-800.webp" \
+            --exclude "Home-1600.webp" \
             --cache-control "public, max-age=86400"
 
+      # 3) Hero images: long cache. If you ever change the photo, RENAME the file
+      #    (e.g. Home-800-v2.webp) and update index.html, Home.jsx and Auth.scss.
+      - name: Deploy hero images (long cache)
+        run: |
+          aws s3 cp dist/Home-800.webp s3://gks-fitness-shop-2026/Home-800.webp \
+            --cache-control "public, max-age=31536000, immutable"
+          aws s3 cp dist/Home-1600.webp s3://gks-fitness-shop-2026/Home-1600.webp \
+            --cache-control "public, max-age=31536000, immutable"
+
+      # 4) index.html must never be cached, so visitors always get the latest build.
       - name: Deploy index.html (no cache)
         run: |
           aws s3 cp dist/index.html s3://gks-fitness-shop-2026/index.html \
             --cache-control "no-cache"
 
+      # 5) Clear CloudFront's cached copies.
       - name: Invalidate CloudFront Cache
+        # Note: Replace E14CQA7CZ9DN6 with your actual CloudFront Distribution ID if it changed!
         run: aws cloudfront create-invalidation --distribution-id E14CQA7CZ9DN6 --paths "/*"
