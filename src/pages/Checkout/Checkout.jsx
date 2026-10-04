@@ -24,7 +24,6 @@ const Checkout = () => {
     const location = useLocation();
 
     const [loading, setLoading] = useState(false);
-    // THE FIX: Add a state to let useEffect know a payment just succeeded
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
     const [shippingAddress, setShippingAddress] = useState({
@@ -37,7 +36,6 @@ const Checkout = () => {
     const displayTotal = totalAmount.toFixed(2);
 
     useEffect(() => {
-        // THE FIX: Only redirect to cart if payment wasn't just successful
         if (!paymentSuccess && !directItem && (!cart || cart.length === 0)) {
             navigate('/cart');
         }
@@ -70,6 +68,7 @@ const Checkout = () => {
                 image: item.product.image || item.product.images?.[0] || 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=200&q=80',
             }));
 
+            // 1. Send all data to create the "Pending" order in the database first
             const { data: orderData } = await axiosClient.post('/payment/create-order', {
                 orderItems: formattedOrderItems,
                 shippingAddress,
@@ -87,31 +86,24 @@ const Checkout = () => {
                 order_id: orderData.razorpayOrderId,
                 handler: async function (response) {
                     try {
-                        toast.loading("Verifying payment & saving order...");
+                        toast.loading("Verifying payment & finalizing order...");
 
+                        // 2. 🔥 THE FIX: Only send the signature data! The backend already has the cart.
                         const verifyRes = await axiosClient.post('/payment/verify-payment', {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_signature: response.razorpay_signature,
-                            orderItems: formattedOrderItems,
-                            shippingAddress,
-                            totalAmount: Number(totalAmount)
+                            razorpay_signature: response.razorpay_signature
                         });
 
                         toast.dismiss();
                         if (verifyRes.status === 200) {
-
-                            // THE FIX: Set success to true BEFORE clearing the cart!
-                            // This stops the useEffect from jumping back to the empty cart page.
                             setPaymentSuccess(true);
-
                             toast.success('Order placed successfully!');
 
                             if (!directItem) {
                                 clearCart();
                             }
 
-                            // THE FIX: replace: true stops them from hitting "Back" into checkout
                             navigate('/orders', { replace: true });
                         }
                     } catch (err) {
