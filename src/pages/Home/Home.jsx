@@ -38,6 +38,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      {/* Keep this hero markup identical to the static shell in index.html */}
       <section className="home-hero">
         <picture>
           <source media="(max-width: 800px)" srcSet="/Home-800.webp" type="image/webp" />

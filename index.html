@@ -27,7 +27,51 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <!--
+      STATIC SHELL: same class names as the React Navbar + Home hero, so the
+      site's own CSS styles it. It paints BEFORE React loads. React replaces it
+      when it mounts. Keep this markup identical to Home.jsx (hero part) and
+      Navbar.jsx (logo part).
+    -->
+    <div class="app-wrapper" id="shell">
+      <nav class="navbar">
+        <div class="navbar-inner container">
+          <a href="/" class="navbar-logo">
+            <svg class="logo-icon" width="28" height="28" aria-hidden="true"></svg>
+            <span>GK'S <strong>FITNESS SHOP</strong></span>
+          </a>
+        </div>
+      </nav>
+
+      <main class="app-main">
+        <div class="home">
+          <section class="home-hero">
+            <picture>
+              <source media="(max-width: 800px)" srcset="/Home-800.webp" type="image/webp" />
+              <img src="/Home-1600.webp" alt="GK Fitness Premium Gym Gear" class="home-hero-bg" fetchpriority="high" />
+            </picture>
+
+            <div class="home-hero-content">
+              <h1>Everything You Need, All in One Place.</h1>
+              <p>Discover our curated collection of premium gym gear and supplements. Shop the best quality to fuel your
+                performance.</p>
+              <a href="/catalog" class="btn-cta">Start Shopping</a>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- The shell is only for the home page. On any other route, remove it instantly. -->
+  <script>
+    if (location.pathname !== "/") {
+      var s = document.getElementById("shell");
+      if (s) s.remove();
+    }
+  </script>
+
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
