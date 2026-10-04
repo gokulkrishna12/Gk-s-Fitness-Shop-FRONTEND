@@ -46,7 +46,6 @@ const Home = () => {
             alt="GK Fitness Premium Gym Gear"
             className="home-hero-bg"
             fetchPriority="high"
-            decoding="async"
           />
         </picture>
 
